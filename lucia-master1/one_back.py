@@ -61,14 +61,23 @@ def getTrialList(itemList,nReps):
     
     print itemsARepetir1, block1[itemsARepetir1[0]+flankers] , block1[itemsARepetir1[1]+flankers]
     for indice,posicion in enumerate(posAInsertar1):
+        nuevoTrial = tuple(block1[itemsARepetir1a[indice]+flankers])
+        nItem,item,cond_target,bloque,e,f,g,h,i,j  = nuevoTrial
+        nuevoTrial = (nItem,item,1,bloque,e,f,g,h,i,j)
         # en la posicion posAInsertar, inserto el item numero itemsARepetir[indice] de la lista
         print "insertandoooo"
-        block1.insert(flankers+posicion,block1[itemsARepetir1a[indice]+flankers])
+        block1.insert(flankers+posicion,nuevoTrial)
     for indice,posicion in enumerate(posAInsertar2):
     # en la posicion posAInsertar, inserto el item numero itemsARepetir[indice] de la lista
-        block2.insert(posicion+flankers,block2[itemsARepetir2a[indice]+flankers])
+        nuevoTrial = tuple(block2[itemsARepetir2a[indice]+flankers])
+        nItem,item,cond_target,bloque,e,f,g,h,i,j  = nuevoTrial
+        nuevoTrial = (nItem,item,1,bloque,e,f,g,h,i,j)
+        block2.insert(flankers+posicion,nuevoTrial)
     print str(len(block1)) + " ---- " + str(len(block2))
     return((block1,block2))
+
+
+
 
 # ----------------- PRESETS --------------
 
