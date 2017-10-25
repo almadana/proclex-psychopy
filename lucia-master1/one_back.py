@@ -22,6 +22,7 @@ from ctypes import windll
 # B_ nReps trials extra, repitiendo los items
 # C_ randomiza orden, dejando margen al principio y al final sin repetidos
 # D_ los repetidos van juntos :) (ej: cara cara nariz payaso boca mia mia)
+nReps=12
 def getTrialList(itemList,nReps):
     #flankers al principio y al final, que no se van a repetir
     flankers=4
@@ -120,13 +121,14 @@ for l in lista:
     l=l.strip()
     f=l.split(',')
     itemlist.append(tuple(f))
+
     #print expe
-    
+#print itemlist    
 
 
-exp=getTrialList(itemlist)
+expe1, expe2=getTrialList(itemlist,nReps)
 
-fin=len(expe)  
+fin=len(expe1)  
 print fin
 
 print 'EMPIEZA EL EXPERIMENTO'
@@ -173,7 +175,7 @@ core.wait(1)
 
 ensayo=0
 
-for item in expe:
+for item in expe1:
     
     print item
     ensayo=ensayo+1
@@ -255,7 +257,7 @@ for item in expe:
 
         
         
-        salida.write(item[0]+','+item[1]+','+item[2]+','+item[3]+','+item[4]+','+item[5]+','+item[6]+','+item[7]+','+item[8]+','+item[9]+','+resp','+ "tResp"+"\n")
+        #salida.write(item[0]+','+item[1]+','+item[2]+','+item[3]+','+item[4]+','+item[5]+','+item[6]+','+item[7]+','+item[8]+','+item[9]+','+resp+','+ "tResp"+"\n")
 #    print 'Respuesta'
 #    print laResp
 #    print 'TR'
@@ -269,4 +271,3 @@ core.quit()
     
 
     # 'Palabra1,Palabra2,Pregunta,Nombre_condicion,Two_words,orden,Congruencia,Resp,tResp,Tecla,\n'
-
