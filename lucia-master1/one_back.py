@@ -22,7 +22,7 @@ from ctypes import windll
 # B_ nReps trials extra, repitiendo los items
 # C_ randomiza orden, dejando margen al principio y al final sin repetidos
 # D_ los repetidos van juntos :) (ej: cara cara nariz payaso boca mia mia)
-nReps=12
+nReps=20
 def getTrialList(itemList,nReps):
     #flankers al principio y al final, que no se van a repetir
     flankers=4
@@ -40,7 +40,7 @@ def getTrialList(itemList,nReps):
     #cuanto es la mitad?
     mitad1nReps=int(round(nReps/2.0)) #la mitad
     mitad2nReps=nReps-mitad1nReps # la otra mitad
- 
+
 
     #vamos a generar dos bloques
     block1 = trialList[:mitaditemList]
@@ -64,7 +64,7 @@ def getTrialList(itemList,nReps):
     for indice,posicion in enumerate(posAInsertar1):
         nuevoTrial = tuple(block1[itemsARepetir1a[indice]+flankers])
         nItem,item,cond_target,bloque,e,f,g,h,i,j  = nuevoTrial
-        nuevoTrial = (nItem,item,1,bloque,e,f,g,h,i,j)
+        nuevoTrial = (nItem,item,'1',bloque,e,f,g,h,i,j)
         # en la posicion posAInsertar, inserto el item numero itemsARepetir[indice] de la lista
         print "insertandoooo"
         block1.insert(flankers+posicion,nuevoTrial)
@@ -72,7 +72,7 @@ def getTrialList(itemList,nReps):
     # en la posicion posAInsertar, inserto el item numero itemsARepetir[indice] de la lista
         nuevoTrial = tuple(block2[itemsARepetir2a[indice]+flankers])
         nItem,item,cond_target,bloque,e,f,g,h,i,j  = nuevoTrial
-        nuevoTrial = (nItem,item,1,bloque,e,f,g,h,i,j)
+        nuevoTrial = (nItem,item,'1',bloque,e,f,g,h,i,j)
         block2.insert(flankers+posicion,nuevoTrial)
     print str(len(block1)) + " ---- " + str(len(block2))
     return((block1,block2))
@@ -114,7 +114,6 @@ expe=[]
 
 globalClock = core.Clock()
 trialClock = core.Clock()
-allnightClock = core.Clock()
 
 
 for l in lista:   
@@ -125,6 +124,8 @@ for l in lista:
     #print expe
 #print itemlist    
 
+#remueve header del archivo!!!
+itemlist.pop(0)
 
 expe1, expe2=getTrialList(itemlist,nReps)
 
@@ -202,62 +203,64 @@ for item in expe1:
     
     contador=0
     
-    # Presentamos oracion palabra a palabra
-    for word in item[1:2]:
-        
-	c=contador+1
+    print "ITEM ITEM " + str(item)
+    print "ITEM PALABRA" + str(item[1])
+
     
-        print word
-        
-        for nFrames in range(60): #tiempo de presentacion de cada palabra, a 60 Hz es 300 ms. Cada frame dura 0.01666 seg, si presento cada palabra por60 frames, cada palabra se presenta durante 1000 ms aprox
-                if word:
-                    tt=word.decode('utf-8')  #tiene que transformarse de utf-8
-                    words.setText(tt)
-                    words.draw()
-                    mywin.flip()
-                    
-        b=event.getKeys(keyList=['space'] , timeStamped=trialClock) #buscar opcion xa q se quede con el primer tr
-        print 'va b'
-        if b: 
-            b=b[0]
-            print 'nuevo b'
-            print b
-             
+    word = item[1]
+    c=contador+1
+    print word
+    
+    trialClock.reset()
+    event.clearEvents()
+    tt=word.decode('utf-8')  #tiene que transformarse de utf-8
+    words.setText(tt)
+    for nFrames in range(60): #tiempo de presentacion de cada palabra, a 60 Hz es 300 ms. Cada frame dura 0.01666 seg, si presento cada palabra por60 frames, cada palabra se presenta durante 1000 ms aprox
+        words.draw()
+        mywin.flip()
+                
+    # GENERAR ISI
+    ISI= ny.random.randint(60,90)
+    for nFrames in range(ISI): #tendria que se random entre 1250 y 1500 x ej
+        mywin.flip()
+
+    # LEVANTAR KEYPRESSES
+    b=event.getKeys(keyList=['space'] , timeStamped=trialClock) #buscar opcion xa q se quede con el primer tr
+    print 'va b'
+    if b: 
+        b=b[0]
+        print 'nuevo b'
+        print b
+         
 #		if co=2:          
 #		    trig.Out32(0x378,trigCode)    
 #		    event.clearEvents()
-        ISI= ny.random.randint(60,90)
-        for nFrames in range(ISI): #tendria que se random entre 1250 y 1500 x ej
-            mywin.flip()
 #		if c=2:
 # 		trig.Out32(0x378,0) 
 
 
     #Tomo la respuesta
-
-        if not b and item[2]=='1':
-            (resp,tResp)=['1','0']     #no contesta y no es targetº
-            print resp
-            print tResp
-            
-        if not b and item[2]=='1':
-            (resp,tResp)=['0','0']    #no contesta y es target
-            print tResp
-            
-        if b and item [2] =='1':
-            (resp,tResp)=['1',b[1]]     #contesta y es target
-            print resp
-            print tResp
-            
-        if b and item [2] =='0':
-            (resp,tResp)=['0',b[1]]    #conesta y no es target
-            print resp
-            print tResp
-            
-
+    if not b and item[2]=='0':
+        resp,tResp=('1','NA')     #no contesta y no es targetº
+        print resp
+        print tResp
         
+    if not b and item[2]=='1':
+        resp,tResp=('0','NA')    #no contesta y es target
+        print tResp
         
-        #salida.write(item[0]+','+item[1]+','+item[2]+','+item[3]+','+item[4]+','+item[5]+','+item[6]+','+item[7]+','+item[8]+','+item[9]+','+resp+','+ "tResp"+"\n")
+    if b and item [2] =='1':
+        resp,tResp=('1',b[1])    #contesta y es target
+        print resp
+        print tResp
+         
+    if b and item [2] =='0':
+        resp,tResp=('0',b[1])    #conesta y no es target
+        print resp
+        print tResp
+                
+   
+    salida.write(item[0]+','+item[1]+','+item[2]+','+item[3]+','+item[4]+','+item[5]+','+item[6]+','+item[7]+','+item[8]+','+item[9]+','+resp+','+ str(tResp)+"\n")
 #    print 'Respuesta'
 #    print laResp
 #    print 'TR'
