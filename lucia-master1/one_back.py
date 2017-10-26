@@ -17,11 +17,15 @@ from ctypes import windll
 #trig= windll.inpout32
 
 
+#            FUNCIÓN PARA CREAR LISTAS CON REPETICIONES ALEATORIAS         
+
+
 # esta función toma de entrada una lista de items (como en "palabras_provisorio.csv")  y crea:
 # A- 1 trial por item
 # B_ nReps trials extra, repitiendo los items
 # C_ randomiza orden, dejando margen al principio y al final sin repetidos
 # D_ los repetidos van juntos :) (ej: cara cara nariz payaso boca mia mia)
+# E_ Dos bloques 
 nReps=20
 def getTrialList(itemList,nReps):
     #flankers al principio y al final, que no se van a repetir
@@ -82,12 +86,12 @@ def getTrialList(itemList,nReps):
 
 # ----------------- PRESETS --------------
 
-#Info del experimento
+#           Info del experimento
 expInfo={'experimentador':'LF', 'sujeto':'000000','cond':['palabra','pseudopalabra','falsefont' ]}
 expInfo['fecha']=data.getDateStr()
 dial = gui.DlgFromDict(expInfo,title='one_back',fixed=['fecha','LF'])
 
-#VENTANA
+#           VENTANA
 x=1024; y=768#defino tamano del monitor  
 
 mywin = visual.Window(fullscr=False,size=[x,y],allowGUI=True, monitor="testMonitor", units="deg",color=[-0.2,-0.2,-0.2], screen=0)
@@ -101,11 +105,12 @@ if fps!=None:
     frameDur = 1.0/round(fps)
 else:
     frameDur = 1.0/60.0 # couldn't get a reliable measure so guess
-#INPUT. Ejecuto el script que me genera estimulos para cada sujeto de acuerdo al experimento a correr
-# hacer esto
+
 
 #if expInfo['cond']=='palabra':
-#    execfile('Lista_palabras.py')#hay q hacerlo
+#lista=open('palabras_provisorio.csv')      
+#if expInfo['cond']=='pseudopalabra':
+#lista=open('pseudopalabras_provisorio.csv'     y false (lo pongo las 3 veces y fue?)
 
 
 lista=open('palabras_provisorio.csv')
@@ -144,11 +149,7 @@ salida = open(archivoOut,'w')
 
 
  # test, itemOri,condExp,condCtx,subCondExp,prime,target,resp,tResp,lista
-salida.write('num_item,item,cond_target, bloque, tr,respuesta,acierto\n') #agregar tr y resp
-
-
-
-
+salida.write('num_item,item,cond_target, bloque, cond_bloque,tipo,x1,x2,x3,estructura,acierto,TR\n') #agregar tr y resp
 
 
 
@@ -202,11 +203,7 @@ for item in expe1:
     core.wait(1)
     
     contador=0
-    
-    print "ITEM ITEM " + str(item)
-    print "ITEM PALABRA" + str(item[1])
 
-    
     word = item[1]
     c=contador+1
     print word
@@ -219,7 +216,7 @@ for item in expe1:
         words.draw()
         mywin.flip()
                 
-    # GENERAR ISI
+    #        GENERAR ISI
     ISI= ny.random.randint(60,90)
     for nFrames in range(ISI): #tendria que se random entre 1250 y 1500 x ej
         mywin.flip()
@@ -261,10 +258,7 @@ for item in expe1:
                 
    
     salida.write(item[0]+','+item[1]+','+item[2]+','+item[3]+','+item[4]+','+item[5]+','+item[6]+','+item[7]+','+item[8]+','+item[9]+','+resp+','+ str(tResp)+"\n")
-#    print 'Respuesta'
-#    print laResp
-#    print 'TR'
-#    print tResp
+
 
 mywin.close()
 salida.close()
