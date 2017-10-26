@@ -11,7 +11,7 @@ import numpy as ny
 import re
 import os
 
-from ctypes import windll
+#from ctypes import windll
 
 #Puerto paralelo para trigger
 #trig= windll.inpout32
@@ -79,11 +79,113 @@ def getTrialList(itemList,nReps):
         nuevoTrial = (nItem,item,'1',bloque,e,f,g,h,i,j)
         block2.insert(flankers+posicion,nuevoTrial)
     print str(len(block1)) + " ---- " + str(len(block2))
-    return((block1,block2))
+    return([block1,block2])
+
+def presentarEstimulo(words,mywin):
+    for nFrames in range(60): #tiempo de presentacion de cada palabra, a 60 Hz es 300 ms. Cada frame dura 0.01666 seg, si presento cada palabra por60 frames, cada palabra se presenta durante 1000 ms aprox
+        words.draw()
+        mywin.flip()
+                
+    #        GENERAR ISI
+    ISI= ny.random.randint(60,90)
+    for nFrames in range(ISI): #tendria que se random entre 1250 y 1500 x ej
+        mywin.flip()
+
+def getResp(esTarget,contesta):
+    
+    #Tomo la respuesta
+    if not contesta and not esTarget:
+        resp,tResp=('1','NA')     #no contesta y no es targetº
+        print resp
+        print tResp
+        
+    if not contesta and esTarget:
+        resp,tResp=('0','NA')    #no contesta y es target
+        print tResp
+        
+    if contesta and esTarget:
+        resp,tResp=('1',contesta[1])    #contesta y es target
+        print resp
+        print tResp
+         
+    if contesta and not esTarget:
+        resp,tResp=('0',contesta[1])    #conesta y no es target
+        print resp
+        print tResp
+    return(resp,tResp)
 
 
+def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo):
+    for item in block:
+        
+        print item
+        ensayo=ensayo+1
+        print ensayo
+        
+        
+        ##código de trigger (
+    #    trigCode=0
+    #    if item[3]=='1.1': trigCode=10 #palabra
+    #    elif item[3]=='1.2': trigCode=11 #palabra target
+    #    elif item[3]=='1.3': trigCode=20 #pseudopalabra
+    #    elif item[3]=='1.4': trigCode=21 #pseudopalabra target
+    #    elif item[3]=='2.1': trigCode=30 #false font
+    #    elif item[3]=='2.2': trigCode=31 #false font target
 
+    #
+    #    print 'trigCode'
+    #    print trigCode
+        
+        
+        #cruz de fijaciòn, 1 segundo
+        fixation.draw()
+        mywin.flip()
+        core.wait(1)
+        
+        #preparo estímulo
+        estimulo = item[1]
+        print estimulo
+        tt = estimulo.decode('utf-8')  #tiene que transformarse de utf-8
+        estimuloTexto.setText(tt)
+        trialClock.reset()
+        event.clearEvents()
+        # presento estimulo
+        presentarEstimulo(estimuloTexto,mywin)
+        # LEVANTAR KEYPRESSES
+        b=event.getKeys(keyList=['space'] , timeStamped=trialClock) #buscar opcion xa q se quede con el primer tr
+        print 'va b'
+        if b: 
+            b=b[0]
+            print 'nuevo b'
+            print b
+             
+    #		if co=2:          
+    #		    trig.Out32(0x378,trigCode)    
+    #		    event.clearEvents()
+    #		if c=2:
+    # 		trig.Out32(0x378,0) 
+        #transformo item[2] en un número
+        print "B... "+ str(b)
+        print "item 2 " +  item[2]
+        
+        resp,tResp = getResp(int(item[2]),b) # ojo que item[2]  està como string, lo convierto a entero para que el if quede más lindo
+        
+       
+        salida.write(item[0]+','+item[1]+','+item[2]+','+item[3]+','+item[4]+','+item[5]+','+item[6]+','+item[7]+','+item[8]+','+item[9]+','+resp+','+ str(tResp)+"\n")
 
+def meterPausa(mywin,pausaTexto1,pausaTexto2):
+    mywin.flip()
+    pausaTexto1.draw()
+    mywin.flip()
+    core.wait(5) # pausa obligatoria
+    event.waitKeys()
+    mywin.flip()
+    pausaTexto2.draw()
+    mywin.flip()
+    core.wait(2)
+    event.waitKeys()
+    mywin.flip()
+    core.wait(2)
 # ----------------- PRESETS --------------
 
 #           Info del experimento
@@ -106,36 +208,30 @@ if fps!=None:
 else:
     frameDur = 1.0/60.0 # couldn't get a reliable measure so guess
 
+# archivos de estímulos para cada condición
+archivos = {'palabra':'palabras_provisorio.csv','pseudopalabra':'pseudopalabras_provisorio.csv','falsefont':'falsefont_provisorio.csv'}
+nombreArchivoEstimulos=archivos[expInfo['cond']]
 
-#if expInfo['cond']=='palabra':
 #lista=open('palabras_provisorio.csv')      
 #if expInfo['cond']=='pseudopalabra':
 #lista=open('pseudopalabras_provisorio.csv'     y false (lo pongo las 3 veces y fue?)
 
+#abro archivo de estimulos
+archivoEstimulos=open(nombreArchivoEstimulos)
+#lista vacia de items/estimulos
 
-lista=open('palabras_provisorio.csv')
 itemlist=[]
-expe=[]
 
-globalClock = core.Clock()
-trialClock = core.Clock()
-
-
-for l in lista:   
+for l in archivoEstimulos:
     l=l.strip()
     f=l.split(',')
     itemlist.append(tuple(f))
 
-    #print expe
-#print itemlist    
-
 #remueve header del archivo!!!
 itemlist.pop(0)
 
-expe1, expe2=getTrialList(itemlist,nReps)
-
-fin=len(expe1)  
-print fin
+#genero bloques
+bloques=getTrialList(itemlist,nReps)
 
 print 'EMPIEZA EL EXPERIMENTO'
 
@@ -149,10 +245,10 @@ salida = open(archivoOut,'w')
 
 
  # test, itemOri,condExp,condCtx,subCondExp,prime,target,resp,tResp,lista
-salida.write('num_item,item,cond_target, bloque, cond_bloque,tipo,x1,x2,x3,estructura,acierto,TR\n') #agregar tr y resp
+salida.write('num_item,item,cond_target, tipoEstimulo, cond_bloque,tipo,x1,x2,x3,estructura,acierto,TR\n') #agregar tr y resp
 
-
-
+# Estimulos graficos
+#########################3
 #Punto de fijacion
 fixation = visual.ShapeStim(mywin, 
                 lineColor='black', 
@@ -161,103 +257,27 @@ fixation = visual.ShapeStim(mywin,
                 closeShape=False, 
                 pos= [0,0])  
 #Palabras
-words=visual.TextStim(win=mywin, pos=[0,0],color=[-1,-1,-1])
-
+estimuloTexto=visual.TextStim(win=mywin, pos=[0,0],color=[-1,-1,-1])
+# Texto intermedio
+textoIntermedio1=visual.TextStim(win=mywin, pos=[0,0],color=[-1,-1,-1])
+textoIntermedio1.setText("BIen! es hora de hacer un descansoo...!!!")
+textoIntermedio2=visual.TextStim(win=mywin, pos=[0,0],color=[-1,-1,-1])
+textoIntermedio2.setText("Seguimos..!!!... Presiona cualquier tecla para continuar")
 
 # --------------COMIENZA RUTINA-----------
 
 
 
-#Aparece punto de fijación
-fixation.draw()
-mywin.flip()
-core.wait(1)
-
-
+globalClock = core.Clock()
+trialClock = core.Clock()
 
 ensayo=0
 
-for item in expe1:
-    
-    print item
-    ensayo=ensayo+1
-    print ensayo
-    
-    
-    ##código de trigger (
-#    trigCode=0
-#    if item[3]=='1.1': trigCode=10 #palabra
-#    elif item[3]=='1.2': trigCode=11 #palabra target
-#    elif item[3]=='1.3': trigCode=20 #pseudopalabra
-#    elif item[3]=='1.4': trigCode=21 #pseudopalabra target
-#    elif item[3]=='2.1': trigCode=30 #false font
-#    elif item[3]=='2.2': trigCode=31 #false font target
+#deberìan haber dos bloques, eso es lo que devuelve getTrialList()...
+for bloque in bloques:
+    loopEstimulo(mywin,bloque,trialClock,fixation,estimuloTexto,salida,ensayo)
+    meterPausa(mywin,textoIntermedio1)
 
-#
-#    print 'trigCode'
-#    print trigCode
-    
-    
-    fixation.draw()
-    mywin.flip()
-    core.wait(1)
-    
-    contador=0
-
-    word = item[1]
-    c=contador+1
-    print word
-    
-    trialClock.reset()
-    event.clearEvents()
-    tt=word.decode('utf-8')  #tiene que transformarse de utf-8
-    words.setText(tt)
-    for nFrames in range(60): #tiempo de presentacion de cada palabra, a 60 Hz es 300 ms. Cada frame dura 0.01666 seg, si presento cada palabra por60 frames, cada palabra se presenta durante 1000 ms aprox
-        words.draw()
-        mywin.flip()
-                
-    #        GENERAR ISI
-    ISI= ny.random.randint(60,90)
-    for nFrames in range(ISI): #tendria que se random entre 1250 y 1500 x ej
-        mywin.flip()
-
-    # LEVANTAR KEYPRESSES
-    b=event.getKeys(keyList=['space'] , timeStamped=trialClock) #buscar opcion xa q se quede con el primer tr
-    print 'va b'
-    if b: 
-        b=b[0]
-        print 'nuevo b'
-        print b
-         
-#		if co=2:          
-#		    trig.Out32(0x378,trigCode)    
-#		    event.clearEvents()
-#		if c=2:
-# 		trig.Out32(0x378,0) 
-
-
-    #Tomo la respuesta
-    if not b and item[2]=='0':
-        resp,tResp=('1','NA')     #no contesta y no es targetº
-        print resp
-        print tResp
-        
-    if not b and item[2]=='1':
-        resp,tResp=('0','NA')    #no contesta y es target
-        print tResp
-        
-    if b and item [2] =='1':
-        resp,tResp=('1',b[1])    #contesta y es target
-        print resp
-        print tResp
-         
-    if b and item [2] =='0':
-        resp,tResp=('0',b[1])    #conesta y no es target
-        print resp
-        print tResp
-                
-   
-    salida.write(item[0]+','+item[1]+','+item[2]+','+item[3]+','+item[4]+','+item[5]+','+item[6]+','+item[7]+','+item[8]+','+item[9]+','+resp+','+ str(tResp)+"\n")
 
 
 mywin.close()
