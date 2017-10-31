@@ -1,0 +1,6 @@
+num_item,item, tipoEstimulo, cod_tipoEstimulo, tipo_pal, frec, frec_ac, num_caract, estr, acierto,TR
+1,CASA,palabra,1,S,472,1775,4,cvcv
+10,NESE,pseudopalabra,0,PW,NA,NA,NA,NA
+3,LUNA,palabra,1,S,266,159,4,cvcv
+1,BASA,pseudopalabra,0,PW,NA,NA,NA,NA
+8,NAER,pseudopalabra,0,PW,NA,NA,NA,NA
