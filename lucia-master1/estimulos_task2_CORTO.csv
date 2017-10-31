@@ -1,10 +1,10 @@
 num_item,item,tipo_estim,cod_tipo_estim,tipo_pal,frec,frec_ac,num_caract,estr,imagen,congruencia,nombreArchivo
-1,CASA,palabra,1,S,472,1775,4,cvcv,1,1,casa
-2,SOL,palabra,1,S,289,577,3,cvc,1,1,sol
-3,LUNA,palabra,1,S,266,159,4,cvcv,1,1,luna
-4,GATO,palabra,1,S,258,140,4,cvcv,1,0,flor
-6,MAR,palabra,1,S,173,443,3,cvc,1,0,pato
-8,MESA,palabra,1,S,159,469,4,cvcv,1,0,rey
+1,CASA,palabra,1,S,472,1775,4,cvcv,1,1,CASA
+2,SOL,palabra,1,S,289,577,3,cvc,1,1,SOL
+3,LUNA,palabra,1,S,266,159,4,cvcv,1,1,LUNA
+4,GATO,palabra,1,S,258,140,4,cvcv,1,0,LAGO
+6,MAR,palabra,1,S,173,443,3,cvc,1,0,BICI
+8,MESA,palabra,1,S,159,469,4,cvcv,1,0,COPA
 9,OSO,palabra,1,S,135,46,3,vcv,0,NA,NA
 10,PATO,palabra,1,S,123,10,4,cvcv,0,NA,NA
 11,ROSA,palabra,1,S,123,93,4,cvcv,0,NA,NA

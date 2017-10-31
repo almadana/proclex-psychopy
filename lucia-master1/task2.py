@@ -54,13 +54,49 @@ def presentarEstimulo(words,mywin):
         words.draw()
         mywin.flip()
                 
+
+
+def presentarImagen(estimuloImagen,mwin):
+        #        GENERAR ISI
+    ISI= ny.random.randint(20,30)
+    for nFrames in range(ISI): #tendria que se random entre 1250 y 1500 x ej
+        mywin.flip()
+
+    mywin.flip()
+    for nFrames in range(60):
+        estimuloImagen.draw()
+        mywin.flip()
     #        GENERAR ISI
     ISI= ny.random.randint(60,90)
     for nFrames in range(ISI): #tendria que se random entre 1250 y 1500 x ej
         mywin.flip()
 
+def getResp(esTarget,contesta):
+    
+    #Tomo la respuesta
+    if not contesta and not esTarget:
+        resp,tResp=('1','NA')     #no contesta y no es targetº
+        print resp
+        print tResp
+        
+    if not contesta and esTarget:
+        resp,tResp=('0','NA')    #no contesta y es target
+        print tResp
+        
+    if contesta and esTarget:
+        resp,tResp=('1',contesta[1])    #contesta y es target
+        print resp
+        print tResp
+         
+    if contesta and not esTarget:
+        resp,tResp=('0',contesta[1])    #conesta y no es target
+        print resp
+        print tResp
+    return(resp,tResp)
 
-def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo):
+def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo,estimuloImagen):
+    pathImagen="imagenes congruentes 3 o 4 letras cvcv o vcvc/"
+    extension=".png"
     for item in block:
         print "ESTE ES EL ITEM COMPLETO"
         print item
@@ -94,15 +130,28 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo):
         print estimulo
         tt = estimulo.decode('utf-8')  #tiene que transformarse de utf-8
         estimuloTexto.setText(tt)
-        trialClock.reset()
-        event.clearEvents()
+        #imagen estimuloImagen
         # presento estimulo
         presentarEstimulo(estimuloTexto,mywin)
-        #presentarImagen()
-
+        # si hay imagen
+        if item[9]=="1":
+            estimuloImagen.setImage(pathImagen+item[11]+extension)
+            trialClock.reset()
+            event.clearEvents()
+            presentarImagen(estimuloImagen,mywin)
+            b=event.getKeys(keyList=['space'] , timeStamped=trialClock) #buscar opcion xa q se quede con el primer tr
+            print 'va b'
+            resp,tResp = getResp(int(item[10]),b) # ojo que item[2]  està como string, lo convierto a entero para que el if quede más lindo
+        else:
+            resp="NA"
+            tResp="NA"
 #                 SALIDA                                             
+        salida.write(item[0]+','+item[1]+','+item[2]+','+item[3]+','+item[4]+','+item[5]+','+item[6]+','+item[7]+','+item[8]+','+resp+','+ str(tResp)+"\n")
+        #        GENERAR ISI
+        ISI= ny.random.randint(60,90)
+        for nFrames in range(ISI): #tendria que se random entre 1250 y 1500 x ej
+            mywin.flip()
 
-        salida.write(item[0]+','+item[1]+','+item[2]+','+item[3]+','+item[4]+','+item[5]+','+item[6]+','+item[7]+','+item[8]+"\n")
 
 def meterPausa(mywin,pausaTexto1,pausaTexto2):
     mywin.flip()
@@ -193,6 +242,8 @@ fixation = visual.ShapeStim(mywin,
                 pos= [0,0])  
 #Palabras
 estimuloTexto=visual.TextStim(win=mywin, pos=[0,0],color=[-1,-1,-1])
+#imagen
+estimuloImagen=visual.ImageStim(win=mywin,pos=[0,0])
 # Texto intermedio
 pausaTexto1=visual.TextStim(win=mywin, pos=[0,0],color=[-1,-1,-1])
 pausaTexto1.setText("BIen! es hora de hacer un descansoo...!!!")
@@ -211,7 +262,7 @@ ensayo=0
 
 #deberìan haber dos bloques, eso es lo que devuelve getTrialList()...
 for bloque in bloques:
-    loopEstimulo(mywin,bloque,trialClock,fixation,estimuloTexto,salida,ensayo)
+    loopEstimulo(mywin,bloque,trialClock,fixation,estimuloTexto,salida,ensayo,estimuloImagen)
     meterPausa(mywin,pausaTexto1,pausaTexto2)
 
  
