@@ -6,9 +6,8 @@
 #"trial"=cond
 
 from __future__  import division
-from psychopy import visual, core, event, gui, data, sound
+from psychopy import visual, core, event, gui, data
 import numpy as ny
-import re
 import os
 
 #from ctypes import windll

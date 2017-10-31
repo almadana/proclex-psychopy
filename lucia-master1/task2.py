@@ -6,9 +6,8 @@
 #"trial"=cond
 
 from __future__  import division
-from psychopy import visual, core, event, gui, data, sound
+from psychopy import visual, core, event, gui, data
 import numpy as ny
-import re
 import os
 
 #from ctypes import windll
@@ -19,18 +18,36 @@ import os
 
 #            FUNCIÓN PARA CREAR 4 bloques         
 
+# parte estimulos en bloques, manteniendo balanceado la proporción entre conImagen y sinImagen
+# randomiza el orden de items
+def getTrialList(itemImagen,itemNoImagen):
+    #constantes...
+    nBloques=4
+    nItemsImagen=len(itemImagen)
+    nItemsNoImagen=len(itemNoImagen)
+    tamMinImagenBloque=int(ny.floor(nItemsImagen/float(nBloques)))
+    tamMinNoImagenBloque=int(ny.floor(nItemsNoImagen/float(nBloques)))
+    
+    
+    #randomizo
+    itemImagen=list(ny.random.permutation(itemImagen))
+    itemNoImagen=list(ny.random.permutation(itemNoImagen))
+    
+    #reparto items en bloques
+    bloques=[]
+    for nBloque in range(nBloques):
+        #agrego 
+        print "NBLOQ"
+        print nBloque
+        print tamMinImagenBloque
+        esteBloque= itemImagen[nBloque*tamMinImagenBloque:(nBloque+1)*tamMinImagenBloque]  
+        esteBloque.extend( itemNoImagen[nBloque*tamMinNoImagenBloque:(nBloque+1)*tamMinNoImagenBloque] )
+        esteBloque=list(ny.random.permutation(esteBloque))
+        bloques.append(esteBloque)
+        print "BLOQUEEE::" + str(esteBloque[0])
+    print bloques[0]
+    return(bloques)
 
-def getTrialList(itemList):
-   
-    trialList=list(  ny.random.permutation(itemList)   )
-    #vamos a generar 4 bloques
-    block1 = trialList[:5]
-    block2 = trialList[5:10]
-    block3 = trialList[10:15]
-    block4 = trialList[15:]
-
-    print str(len(block1)) + " ---- " + str(len(block2))+ "-----" str(len(block3))+ "------------" str(len(block4))
-    return([block1,block2,block3,block4])
 
 def presentarEstimulo(words,mywin):
     for nFrames in range(60): #tiempo de presentacion de cada palabra, a 60 Hz es 300 ms. Cada frame dura 0.01666 seg, si presento cada palabra por60 frames, cada palabra se presenta durante 1000 ms aprox
@@ -45,12 +62,13 @@ def presentarEstimulo(words,mywin):
 
 def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo):
     for item in block:
-        
+        print "ESTE ES EL ITEM COMPLETO"
         print item
         ensayo=ensayo+1
+        # ESTE ES EL NUMERO DE ENSAYO
         print ensayo
         
-        
+        # function sendTrigger()
         ##código de trigger (
     #    trigCode=0
     #    if item[3]=='1.1': trigCode=10 #palabra
@@ -72,6 +90,7 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo):
         
         #preparo estímulo
         estimulo = item[1]
+        # Print EL ESTIMULO
         print estimulo
         tt = estimulo.decode('utf-8')  #tiene que transformarse de utf-8
         estimuloTexto.setText(tt)
@@ -79,7 +98,7 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo):
         event.clearEvents()
         # presento estimulo
         presentarEstimulo(estimuloTexto,mywin)
-        
+        #presentarImagen()
 
 #                 SALIDA                                             
 
@@ -128,18 +147,26 @@ else:
 archivoEstimulos=open('estimulos_task2_CORTO.csv')
 #lista vacia de items/estimulos
 
-itemlist=[]
+# la idea es separar los items entre los que llevan imagen y los que no, para balancearlo dentro de cada bloque
+itemNoImagen=[]
+itemImagen=[]
 
 for l in archivoEstimulos:
     l=l.strip()
     f=l.split(',')
-    itemlist.append(tuple(f))
-
-#remueve header del archivo!!!
-itemlist.pop(0)
+    #num_item,item,tipo_estim,cod_tipo_estim,tipo_pal,frec,frec_ac,num_caract,estr,imagen,congruencia = f
+    imagen=f[9]
+    print "ES IMAGeN?"
+    print imagen
+    if imagen=="1":
+        print "Es imagen!"
+        itemImagen.append(tuple(f))
+    elif imagen=="0": #el header "imagen" no es ni 1 ni 0 entonces no lo pesco :)
+        print "NO Es imagen!"
+        itemNoImagen.append(tuple(f))
 
 #genero bloques
-bloques=getTrialList(itemlist)
+bloques=getTrialList(itemImagen,itemNoImagen)
 
 print 'EMPIEZA EL EXPERIMENTO'
 
