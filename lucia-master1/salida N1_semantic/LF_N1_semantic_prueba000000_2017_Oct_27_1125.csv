@@ -1,0 +1,21 @@
+num_item,item,cond_target, tipoEstimulo, cond_bloque,tipo,x1,x2,x3,estructura,acierto,TR
+3,LUNA,palabra,1,S,266,159,4,cvcv
+8,MESA,palabra,1,S,159,469,4,cvcv
+2,TAHA,pseudopalabra,0,PW,NA,NA,NA,NA
+2,SOL,palabra,1,S,289,577,3,cvc
+4,FESU,pseudopalabra,0,PW,NA,NA,NA,NA
+9,OSO,palabra,1,S,135,46,3,vcv
+6,MIBO,pseudopalabra,0,PW,NA,NA,NA,NA
+12,GETU,pseudopalabra,0,PW,NA,NA,NA,NA
+8,NAER,pseudopalabra,0,PW,NA,NA,NA,NA
+10,PATO,palabra,1,S,123,10,4,cvcv
+4,GATO,palabra,1,S,258,140,4,cvcv
+12,REY,palabra,1,S,114,309,3,cvc
+11,BOGI,pseudopalabra,0,PW,NA,NA,NA,NA
+3,GERE,pseudopalabra,0,PW,NA,NA,NA,NA
+6,MAR,palabra,1,S,173,443,3,cvc
+9,LAPE,pseudopalabra,0,PW,NA,NA,NA,NA
+10,NESE,pseudopalabra,0,PW,NA,NA,NA,NA
+11,ROSA,palabra,1,S,123,93,4,cvcv
+1,BASA,pseudopalabra,0,PW,NA,NA,NA,NA
+1,CASA,palabra,1,S,472,1775,4,cvcv
