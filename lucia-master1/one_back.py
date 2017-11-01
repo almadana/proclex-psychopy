@@ -28,7 +28,7 @@ import os
 nReps=20
 def getTrialList(itemList,nReps):
     #flankers al principio y al final, que no se van a repetir
-    flankers=4
+    flankers=3
     # condicion de stop
     if nReps+4*flankers+2>len(itemList):
         return(None)
@@ -81,12 +81,13 @@ def getTrialList(itemList,nReps):
     return([block1,block2])
 
 def presentarEstimulo(words,mywin):
-    for nFrames in range(60): #tiempo de presentacion de cada palabra, a 60 Hz es 300 ms. Cada frame dura 0.01666 seg, si presento cada palabra por60 frames, cada palabra se presenta durante 1000 ms aprox
+    for nFrames in range(60): #Cada frame dura 0.01666 seg, si presento cada palabra por60 frames, cada palabra se presenta durante 1000 ms aprox
         words.draw()
         mywin.flip()
                 
     #        GENERAR ISI
-    ISI= ny.random.randint(60,90)
+    ISI= ny.random.randint(60,80) #SERIA ENTREE 1000 ms a 1330 ms aprx
+    print ISI
     for nFrames in range(ISI): #tendria que se random entre 1250 y 1500 x ej
         mywin.flip()
 
@@ -135,11 +136,6 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo):
     #    print 'trigCode'
     #    print trigCode
         
-        
-        #cruz de fijaciòn, 1 segundo
-        fixation.draw()
-        mywin.flip()
-        core.wait(1)
         
         #preparo estímulo
         estimulo = item[2]
@@ -208,7 +204,7 @@ else:
     frameDur = 1.0/60.0 # couldn't get a reliable measure so guess
 
 # archivos de estímulos para cada condición
-archivos = {'palabra':'palabras.csv','pseudopalabra':'pseudopalabras2.csv','falsefont':'falsefont.csv'}
+archivos = {'palabra':'palabras.csv','pseudopalabra':'pseudopalabras.csv','falsefont':'falsefont.csv'}
 nombreArchivoEstimulos=archivos[expInfo['cond']]
 
 #fuente para palabra y pseudo= arial, falsefont=BACS2sans
@@ -259,7 +255,7 @@ fixation = visual.ShapeStim(mywin,
                 closeShape=False, 
                 pos= [0,0])  
 #Palabras
-estimuloTexto=visual.TextStim(win=mywin, font=fuente, pos=[0,0],color=[-1,-1,-1])
+estimuloTexto=visual.TextStim(win=mywin, font=fuente, height=int(25), pos=[0,0],color=[-1,-1,-1])
 # Texto intermedio
 
 textoIntermedio1=visual.TextStim(win=mywin, pos=[0,0],color=[-1,-1,-1])
