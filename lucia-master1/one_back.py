@@ -66,16 +66,16 @@ def getTrialList(itemList,nReps):
     print itemsARepetir1, block1[itemsARepetir1[0]+flankers] , block1[itemsARepetir1[1]+flankers]
     for indice,posicion in enumerate(posAInsertar1):
         nuevoTrial = tuple(block1[itemsARepetir1a[indice]+flankers])
-        nItem,item,cond_target,bloque,e,f,g,h,i,j  = nuevoTrial
-        nuevoTrial = (nItem,item,'1',bloque,e,f,g,h,i,j)
+        nItem,base,item,cond_target,bloque,e = nuevoTrial
+        nuevoTrial = (nItem,base,item,'1',bloque,e)
         # en la posicion posAInsertar, inserto el item numero itemsARepetir[indice] de la lista
         print "insertandoooo"
         block1.insert(flankers+posicion,nuevoTrial)
     for indice,posicion in enumerate(posAInsertar2):
     # en la posicion posAInsertar, inserto el item numero itemsARepetir[indice] de la lista
         nuevoTrial = tuple(block2[itemsARepetir2a[indice]+flankers])
-        nItem,item,cond_target,bloque,e,f,g,h,i,j  = nuevoTrial
-        nuevoTrial = (nItem,item,'1',bloque,e,f,g,h,i,j)
+        nItem,base,item,cond_target,bloque,e  = nuevoTrial
+        nuevoTrial = (nItem,base,item,'1',bloque,e)
         block2.insert(flankers+posicion,nuevoTrial)
     print str(len(block1)) + " ---- " + str(len(block2))
     return([block1,block2])
@@ -142,7 +142,7 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo):
         core.wait(1)
         
         #preparo estímulo
-        estimulo = item[1]
+        estimulo = item[2]
         print estimulo
         tt = estimulo.decode('utf-8')  #tiene que transformarse de utf-8
         estimuloTexto.setText(tt)
@@ -167,10 +167,10 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo):
         print "B... "+ str(b)
         print "item 2 " +  item[2]
         
-        resp,tResp = getResp(int(item[2]),b) # ojo que item[2]  està como string, lo convierto a entero para que el if quede más lindo
+        resp,tResp = getResp(int(item[3]),b) # ojo que item[2]  està como string, lo convierto a entero para que el if quede más lindo
         
        
-        salida.write(item[0]+','+item[1]+','+item[2]+','+item[3]+','+item[4]+','+item[5]+','+item[6]+','+item[7]+','+item[8]+','+item[9]+','+resp+','+ str(tResp)+"\n")
+        salida.write(item[0]+','+item[1]+','+item[2]+','+item[3]+','+item[4]+','+item[5]+','+resp+','+ str(tResp)+"\n")
 
 def meterPausa(mywin,pausaTexto1,pausaTexto2):
     mywin.flip()
@@ -208,8 +208,12 @@ else:
     frameDur = 1.0/60.0 # couldn't get a reliable measure so guess
 
 # archivos de estímulos para cada condición
-archivos = {'palabra':'palabras_provisorio.csv','pseudopalabra':'pseudopalabras_provisorio.csv','falsefont':'falsefont_provisorio.csv'}
+archivos = {'palabra':'palabras.csv','pseudopalabra':'pseudopalabras2.csv','falsefont':'falsefont.csv'}
 nombreArchivoEstimulos=archivos[expInfo['cond']]
+
+#fuente para palabra y pseudo= arial, falsefont=BACS2sans
+fuentes = {'palabra':'arial','pseudopalabra':'arial','falsefont':'BACS2sans'}
+fuente=fuentes[expInfo['cond']]
 
 #lista=open('palabras_provisorio.csv')      
 #if expInfo['cond']=='pseudopalabra':
@@ -243,8 +247,7 @@ archivoOut=path+'\\salida\\'+nombreArch+'.csv'
 salida = open(archivoOut,'w')
 
 
- # test, itemOri,condExp,condCtx,subCondExp,prime,target,resp,tResp,lista
-salida.write('num_item,item,cond_target, tipoEstimulo, cond_bloque,tipo,x1,x2,x3,estructura,acierto,TR\n') #agregar tr y resp
+salida.write('num_item,base,item,cond_target,bloque,cond_bloque,acierto,TR\n') 
 
 # Estimulos graficos
 #########################3
@@ -256,8 +259,9 @@ fixation = visual.ShapeStim(mywin,
                 closeShape=False, 
                 pos= [0,0])  
 #Palabras
-estimuloTexto=visual.TextStim(win=mywin, pos=[0,0],color=[-1,-1,-1])
+estimuloTexto=visual.TextStim(win=mywin, font=fuente, pos=[0,0],color=[-1,-1,-1])
 # Texto intermedio
+
 textoIntermedio1=visual.TextStim(win=mywin, pos=[0,0],color=[-1,-1,-1])
 textoIntermedio1.setText("BIen! es hora de hacer un descansoo...!!!")
 textoIntermedio2=visual.TextStim(win=mywin, pos=[0,0],color=[-1,-1,-1])
