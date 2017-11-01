@@ -275,13 +275,12 @@ ensayo=0
 #deberìan haber dos bloques, eso es lo que devuelve getTrialList()...
 for bloque in bloques:
     loopEstimulo(mywin,bloque,trialClock,fixation,estimuloTexto,salida,ensayo)
-    meterPausa(mywin,textoIntermedio1)
+    meterPausa(mywin,textoIntermedio1,textoIntermedio2)
 
 
 
 mywin.close()
 salida.close()
-lista.close()
 core.quit()
 
     
