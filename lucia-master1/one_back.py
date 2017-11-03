@@ -208,7 +208,7 @@ archivos = {'palabra':'palabras.csv','pseudopalabra':'pseudopalabras.csv','false
 nombreArchivoEstimulos=archivos[expInfo['cond']]
 
 #fuente para palabra y pseudo= arial, falsefont=BACS2sans
-fuentes = {'palabra':'arial','pseudopalabra':'arial','falsefont':'BACS2sans'}
+fuentes = {'palabra':'arial','pseudopalabra':'arial','falsefont':'BACS1'}
 fuente=fuentes[expInfo['cond']]
 
 #lista=open('palabras_provisorio.csv')      
@@ -245,7 +245,10 @@ salida = open(archivoOut,'w')
 
 salida.write('num_item,base,item,cond_target,bloque,cond_bloque,acierto,TR\n') 
 
-# Estimulos graficos
+
+
+
+################## Estimulos graficos
 #########################3
 #Punto de fijacion
 fixation = visual.ShapeStim(mywin, 
@@ -255,13 +258,20 @@ fixation = visual.ShapeStim(mywin,
                 closeShape=False, 
                 pos= [0,0])  
 #Palabras
-estimuloTexto=visual.TextStim(win=mywin, font=fuente, height=int(25), pos=[0,0],color=[-1,-1,-1])
+estimuloTexto=visual.TextStim(win=mywin, font=fuente, pos=[0,0],color=[-1,-1,-1])
+if expInfo["cond"]=="falsefont":
+    estimuloTexto.setHeight(1.8)
 # Texto intermedio
 
 textoIntermedio1=visual.TextStim(win=mywin, pos=[0,0],color=[-1,-1,-1])
 textoIntermedio1.setText("BIen! es hora de hacer un descansoo...!!!")
 textoIntermedio2=visual.TextStim(win=mywin, pos=[0,0],color=[-1,-1,-1])
 textoIntermedio2.setText("Seguimos..!!!... Presiona cualquier tecla para continuar")
+
+
+
+
+
 
 # --------------COMIENZA RUTINA-----------
 

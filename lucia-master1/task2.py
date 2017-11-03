@@ -72,30 +72,49 @@ def presentarImagen(estimuloImagen,mwin):
         mywin.flip()
 
 def getResp(esTarget,contesta):
-    
-    #Tomo la respuesta
-    if not contesta and not esTarget:
-        resp,tResp=('1','NA')     #no contesta y no es targetº
-        print resp
-        print tResp
-        
-    if not contesta and esTarget:
-        resp,tResp=('0','NA')    #no contesta y es target
-        print tResp
-        
-    if contesta and esTarget:
-        resp,tResp=('1',contesta[1])    #contesta y es target
-        print resp
-        print tResp
-         
-    if contesta and not esTarget:
-        resp,tResp=('0',contesta[1])    #conesta y no es target
-        print resp
-        print tResp
+    teclaSi="l"
+    teclaNo="s"
+    if contesta:
+        contesta=contesta[0] # tomo el primer keypress
+        #Tomo la respuesta
+        if contesta[0]==teclaSi:
+            if esTarget:
+                resp,tResp=('1',contesta[1])     #no contesta y no es targetº
+            else:
+                resp,tResp=('0',contesta[1])     #no contesta y no es targetº
+            
+        elif contesta[0]==teclaNo:
+            if not esTarget:
+                resp,tResp=('1',contesta[1])     #no contesta y no es t
+            else:
+                resp,tResp=('0',contesta[1])     #no contesta y no es targetº
+    else:
+        resp,tResp=('NA','NA')
+    print resp
+    print tResp
     return(resp,tResp)
 
+        
+#    if not contesta and esTarget:
+#        resp,tResp=('0','NA')    #no contesta y es target
+#        print tResp
+#        
+#    if contesta and esTarget:
+#        resp,tResp=('1',contesta[1])    #contesta y es target
+#        print resp
+#        print tResp
+#         
+#    if contesta and not esTarget:
+#        resp,tResp=('0',contesta[1])    #conesta y no es target
+#        print resp
+#        print tResp
+#    return(resp,tResp)
+
+
+
+
 def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo,estimuloImagen):
-    pathImagen="imagenes congruentes 3 o 4 letras cvcv o vcvc/"
+    pathImagen="imagenes task2/"
     extension=".png"
     for item in block:
         print "ESTE ES EL ITEM COMPLETO"
@@ -125,7 +144,7 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo,est
         core.wait(1)
         
         #preparo estímulo
-        estimulo = item[1]
+        estimulo = item[ncolItem]
         # Print EL ESTIMULO
         print estimulo
         tt = estimulo.decode('utf-8')  #tiene que transformarse de utf-8
@@ -134,19 +153,19 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo,est
         # presento estimulo
         presentarEstimulo(estimuloTexto,mywin)
         # si hay imagen
-        if item[9]=="1":
-            estimuloImagen.setImage(pathImagen+item[11]+extension)
+        if item[ncolImagen]=="1":
+            estimuloImagen.setImage(pathImagen+item[ncolArchivoImagen]+extension)
             trialClock.reset()
             event.clearEvents()
             presentarImagen(estimuloImagen,mywin)
-            b=event.getKeys(keyList=['space'] , timeStamped=trialClock) #buscar opcion xa q se quede con el primer tr
+            b=event.getKeys(keyList=['s','l'] , timeStamped=trialClock) #buscar opcion xa q se quede con el primer tr
             print 'va b'
-            resp,tResp = getResp(int(item[10]),b) # ojo que item[2]  està como string, lo convierto a entero para que el if quede más lindo
+            resp,tResp = getResp(int(item[ncolCongruencia]),b) # ojo que item[2]  està como string, lo convierto a entero para que el if quede más lindo
         else:
             resp="NA"
             tResp="NA"
 #                 SALIDA                                             
-        salida.write(item[0]+','+item[1]+','+item[2]+','+item[3]+','+item[4]+','+item[5]+','+item[6]+','+item[7]+','+item[8]+','+resp+','+ str(tResp)+"\n")
+        salida.write(item[0]+','+item[1]+','+item[2]+','+item[3]+','+item[4]+','+item[5]+','+item[6]+','+item[7]+','+resp+','+ str(tResp)+"\n")
         #        GENERAR ISI
         ISI= ny.random.randint(60,90)
         for nFrames in range(ISI): #tendria que se random entre 1250 y 1500 x ej
@@ -193,8 +212,13 @@ else:
 
 
 #abro archivo de estimulos
-archivoEstimulos=open('estimulos_task2_CORTO.csv')
-#lista vacia de items/estimulos
+archivoEstimulos=open('estimulos_task2_posta.csv')
+
+########DEFINIR NUMERO DE COLUMNA QUE TIENE INFO #####
+ncolItem=2
+ncolCongruencia=6
+ncolArchivoImagen=7
+ncolImagen=5
 
 # la idea es separar los items entre los que llevan imagen y los que no, para balancearlo dentro de cada bloque
 itemNoImagen=[]
@@ -204,7 +228,7 @@ for l in archivoEstimulos:
     l=l.strip()
     f=l.split(',')
     #num_item,item,tipo_estim,cod_tipo_estim,tipo_pal,frec,frec_ac,num_caract,estr,imagen,congruencia = f
-    imagen=f[9]
+    imagen=f[5]
     print "ES IMAGeN?"
     print imagen
     if imagen=="1":
