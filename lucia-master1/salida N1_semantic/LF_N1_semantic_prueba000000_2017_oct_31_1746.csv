@@ -1,0 +1,4 @@
+num_item,item, tipoEstimulo, cod_tipoEstimulo, tipo_pal, frec, frec_ac, num_caract, estr, acierto,TR
+2,TAHA,pseudopalabra,0,PW,NA,NA,NA,NA,NA,NA
+12,REY,palabra,1,S,114,309,3,cvc,NA,NA
+11,BOGI,pseudopalabra,0,PW,NA,NA,NA,NA,NA,NA
