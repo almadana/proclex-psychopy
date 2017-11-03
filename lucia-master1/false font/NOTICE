@@ -1,0 +1,29 @@
+BACS_1_lowerUppercaseSans.txt
+	- Ref = first letter of the pair
+	- Paire = pair of letters presented
+	- Cible = second letter of the pair
+	- n = number of times a pair was presented
+	- rating.response_mean = mean similarity estimated over the different repetitions
+	- rating.response_raw = similarity estimated for a given trial
+	- rating.response_std = SD of similarity estimated over the different repetitions
+	- rating.rt_mean = mean reaction time over the different repetitions
+	- rating.rt_raw = reaction time for a given trial
+	- rating.rt_std = SD of reaction time over the different repetitions
+	- order = order of presentation
+	- numPs = participant number
+	
+BACS_2_lowercaseSans.txt
+Same fields, except:
+	- Lettre1 = first letter of the pair
+	- bloc = block number
+	- Lettre2 = second letter of the pair
+	- OrdreAlea = index for random order
+
+BACS_2_lowercaseSerif.txt
+Same fields
+
+BACS_2_uppercaseSans.txt
+Same fields
+
+BACS_2_uppercaseSerif.txt
+Same fields
