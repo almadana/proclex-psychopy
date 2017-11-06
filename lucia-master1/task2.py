@@ -52,8 +52,8 @@ def getTrialList(itemImagen,itemNoImagen):
 def presentarEstimulo(words,mywin):
     for nFrames in range(60): #tiempo de presentacion de cada palabra, a 60 Hz es 300 ms. Cada frame dura 0.01666 seg, si presento cada palabra por60 frames, cada palabra se presenta durante 1000 ms aprox
         words.draw()
+        recuadro.draw()
         mywin.flip()
-                
 
 
 def presentarImagen(estimuloImagen,mwin):
@@ -169,6 +169,7 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo,est
         #        GENERAR ISI
         ISI= ny.random.randint(60,90)
         for nFrames in range(ISI): #tendria que se random entre 1250 y 1500 x ej
+            recuadro.draw()
             mywin.flip()
 
 
@@ -264,6 +265,8 @@ fixation = visual.ShapeStim(mywin,
                 vertices=((-0.4, 0), (0.4, 0), (0,0), (0,0.4), (0,-0.4)), 
                 closeShape=False, 
                 pos= [0,0])  
+# Recuadro----
+recuadro=visual.Rect(mywin,lineWidth=1.0,lineColor='black',pos=(0,0), height=2,width=5)
 #Palabras
 estimuloTexto=visual.TextStim(win=mywin, pos=[0,0],color=[-1,-1,-1])
 #imagen
