@@ -1,7 +1,0 @@
-num_item,item, tipoEstimulo, cod_tipoEstimulo, tipo_pal, frec, frec_ac, num_caract, estr, acierto,TR
-26,LAGO,RACO,0,pseudopalabra,0,NA,NA,NA,NA
-20,FOCA,FOCA,1,palabra,0,0,NA,NA,NA
-64,ROPA,BOJA,0,pseudopalabra,0,NA,NA,NA,NA
-27,LANA,FALA,0,pseudopalabra,0,NA,NA,NA,NA
-11,CASA,MABA,0,pseudopalabra,0,NA,NA,NA,NA
-78,VASO,VASO,1,palabra,0,0,NA,NA,NA

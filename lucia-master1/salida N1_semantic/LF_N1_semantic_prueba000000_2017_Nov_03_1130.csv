@@ -1,4 +1,0 @@
-num_item,item, tipoEstimulo, cod_tipoEstimulo, tipo_pal, frec, frec_ac, num_caract, estr, acierto,TR
-58,RAMO,RAMO,1,palabra,0,0,NA,NA,NA
-41,MOTO,MOTO,1,palabra,0,0,NA,NA,NA
-40,MONO,MONO,1,palabra,0,0,NA,NA,NA
