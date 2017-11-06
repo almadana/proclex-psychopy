@@ -59,15 +59,15 @@ def presentarEstimulo(words,mywin):
 def presentarImagen(estimuloImagen,mwin):
         #        GENERAR ISI
     ISI= ny.random.randint(20,30)
-    for nFrames in range(ISI): #tendria que se random entre 1250 y 1500 x ej
-        mywin.flip()
+#    for nFrames in range(ISI): #tendria que se random entre 1250 y 1500 x ej
+#        mywin.flip()
 
     mywin.flip()
-    for nFrames in range(60):
+    for nFrames in range(90): #(60):
         estimuloImagen.draw()
         mywin.flip()
     #        GENERAR ISI
-    ISI= ny.random.randint(60,90)
+    ISI= ny.random.randint(60,80)
     for nFrames in range(ISI): #tendria que se random entre 1250 y 1500 x ej
         mywin.flip()
 
@@ -139,9 +139,9 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo,est
         
         
         #cruz de fijaciòn, 1 segundo
-        fixation.draw()
-        mywin.flip()
-        core.wait(1)
+#        fixation.draw()
+#        mywin.flip()
+#        core.wait(1)
         
         #preparo estímulo
         estimulo = item[ncolItem]

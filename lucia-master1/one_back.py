@@ -208,7 +208,7 @@ archivos = {'palabra':'palabras.csv','pseudopalabra':'pseudopalabras.csv','false
 nombreArchivoEstimulos=archivos[expInfo['cond']]
 
 #fuente para palabra y pseudo= arial, falsefont=BACS2sans
-fuentes = {'palabra':'arial','pseudopalabra':'arial','falsefont':'BACS1'}
+fuentes = {'palabra':'arial','pseudopalabra':'arial','falsefont':'BACS2sans'}
 fuente=fuentes[expInfo['cond']]
 
 #lista=open('palabras_provisorio.csv')      
