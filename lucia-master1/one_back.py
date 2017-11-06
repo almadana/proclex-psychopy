@@ -80,15 +80,17 @@ def getTrialList(itemList,nReps):
     print str(len(block1)) + " ---- " + str(len(block2))
     return([block1,block2])
 
-def presentarEstimulo(words,mywin):
+def presentarEstimulo(words,recuadro,mywin):
     for nFrames in range(60): #Cada frame dura 0.01666 seg, si presento cada palabra por60 frames, cada palabra se presenta durante 1000 ms aprox
         words.draw()
+        recuadro.draw()
         mywin.flip()
                 
     #        GENERAR ISI
     ISI= ny.random.randint(60,80) #SERIA ENTREE 1000 ms a 1330 ms aprx
     print ISI
     for nFrames in range(ISI): #tendria que se random entre 1250 y 1500 x ej
+        recuadro.draw()
         mywin.flip()
 
 def getResp(esTarget,contesta):
@@ -116,6 +118,11 @@ def getResp(esTarget,contesta):
 
 
 def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo):
+    #antes de empezar, dibujo el recuadro un par de segundos....
+    mywin.flip()
+    recuadro.draw()
+    mywin.flip()
+    core.wait(1)
     for item in block:
         
         print item
@@ -145,7 +152,7 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo):
         trialClock.reset()
         event.clearEvents()
         # presento estimulo
-        presentarEstimulo(estimuloTexto,mywin)
+        presentarEstimulo(estimuloTexto,recuadro,mywin)
         # LEVANTAR KEYPRESSES
         b=event.getKeys(keyList=['space'] , timeStamped=trialClock) #buscar opcion xa q se quede con el primer tr
         print 'va b'
@@ -232,9 +239,8 @@ itemlist.pop(0)
 #genero bloques
 bloques=getTrialList(itemlist,nReps)
 
-print 'EMPIEZA EL EXPERIMENTO'
 
-#OUTPUT
+#---------------OUTPUT
 path=os.getcwd()
 if not os.path.exists('salida'):
     os.makedirs('salida')
@@ -257,6 +263,9 @@ fixation = visual.ShapeStim(mywin,
                 vertices=((-0.4, 0), (0.4, 0), (0,0), (0,0.4), (0,-0.4)), 
                 closeShape=False, 
                 pos= [0,0])  
+# Recuadro----
+recuadro=visual.Rect(mywin,lineWidth=1.0,lineColor='black',pos=(0,0), height=2,width=5)
+
 #Palabras
 estimuloTexto=visual.TextStim(win=mywin, font=fuente, pos=[0,0],color=[-1,-1,-1])
 if expInfo["cond"]=="falsefont":
@@ -282,6 +291,7 @@ trialClock = core.Clock()
 
 ensayo=0
 
+print 'EMPIEZA EL EXPERIMENTO'
 #deberìan haber dos bloques, eso es lo que devuelve getTrialList()...
 for bloque in bloques:
     loopEstimulo(mywin,bloque,trialClock,fixation,estimuloTexto,salida,ensayo)
