@@ -1,6 +1,6 @@
 num_item,base,item,cond_target,bloque,cond_bloque
 1,ARO,ARO,0,falsefont,3
-2,BAÑO,BAÑO,0,falsefont,3
+2,BAÑO,BANO,0,falsefont,3
 3,BESO,BESO,0,falsefont,3
 4,BOCA,BOCA,0,falsefont,3
 5,BOTA,BOTA,0,falsefont,3
@@ -27,7 +27,7 @@ num_item,base,item,cond_target,bloque,cond_bloque
 26,LAGO,LAGO,0,falsefont,3
 27,LANA,LANA,0,falsefont,3
 28,LATA,LATA,0,falsefont,3
-29,LEÑA,LEÑA,0,falsefont,3
+29,LEÑA,LENA,0,falsefont,3
 30,LOBO,LOBO,0,falsefont,3
 31,LORO,LORO,0,falsefont,3
 32,LUNA,LUNA,0,falsefont,3
@@ -41,7 +41,7 @@ num_item,base,item,cond_target,bloque,cond_bloque
 40,MONO,MONO,0,falsefont,3
 41,MOTO,MOTO,0,falsefont,3
 42,NIDO,NIDO,0,falsefont,3
-43,NIÑO,NIÑO,0,falsefont,3
+43,NIÑO,NINO,0,falsefont,3
 44,NUBE,NUBE,0,falsefont,3
 45,OJO,OJO,0,falsefont,3
 46,OLA,OLA,0,falsefont,3
@@ -73,7 +73,7 @@ num_item,base,item,cond_target,bloque,cond_bloque
 72,TAZA,TAZA,0,falsefont,3
 73,TELA,TELA,0,falsefont,3
 74,TORO,TORO,0,falsefont,3
-75,UÑA,UÑA,0,falsefont,3
+75,UÑA,UNA,0,falsefont,3
 76,UVA,UVA,0,falsefont,3
 77,VACA,VACA,0,falsefont,3
 78,VASO,VASO,0,falsefont,3

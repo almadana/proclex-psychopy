@@ -1,6 +1,6 @@
 num_item,base,item,tipo_estim,cod_tipo_estim,imagen,congruencia,nombreArchivo
 1,ARO,ARO,1,palabra,0,0,NA
-2,BAÑO,BAÑO,1,palabra,0,0,NA
+2,BAÑO,BANO,1,palabra,0,0,NA
 3,BESO,BESO,1,palabra,1,1,BESO
 4,BOCA,BOCA,1,palabra,1,1,BOCA
 5,BOTA,BOTA,1,palabra,0,0,NA
@@ -27,7 +27,7 @@ num_item,base,item,tipo_estim,cod_tipo_estim,imagen,congruencia,nombreArchivo
 26,LAGO,LAGO,1,palabra,1,1,LAGO
 27,LANA,LANA,1,palabra,0,0,NA
 28,LATA,LATA,1,palabra,0,0,NA
-29,LEÑA,LEÑA,1,palabra,1,0,LUPA
+29,LEÑA,LENA,1,palabra,1,0,LUPA
 30,LOBO,LOBO,1,palabra,0,0,NA
 31,LORO,LORO,1,palabra,1,0,BOTE
 32,LUNA,LUNA,1,palabra,1,1,LUNA
@@ -41,7 +41,7 @@ num_item,base,item,tipo_estim,cod_tipo_estim,imagen,congruencia,nombreArchivo
 40,MONO,MONO,1,palabra,0,0,NA
 41,MOTO,MOTO,1,palabra,0,0,NA
 42,NIDO,NIDO,1,palabra,1,0,MAGO
-43,NIÑO,NIÑO,1,palabra,0,0,NA
+43,NIÑO,NINO,1,palabra,0,0,NA
 44,NUBE,NUBE,1,palabra,1,0,CINE
 45,OJO,OJO,1,palabra,1,0,COPA
 46,OLA,OLA,1,palabra,0,0,NA
@@ -73,7 +73,7 @@ num_item,base,item,tipo_estim,cod_tipo_estim,imagen,congruencia,nombreArchivo
 72,TAZA,TAZA,1,palabra,0,0,NA
 73,TELA,TELA,1,palabra,1,0,PATO
 74,TORO,TORO,1,palabra,0,0,NA
-75,UÑA,UÑA,1,palabra,1,0,PAN
+75,UÑA,UNA,1,palabra,1,0,PAN
 76,UVA,UVA,1,palabra,1,0,ROPA
 77,VACA,VACA,1,palabra,0,0,NA
 78,VASO,VASO,1,palabra,0,0,NA
@@ -141,9 +141,9 @@ num_item,base,item,tipo_estim,cod_tipo_estim,imagen,congruencia,nombreArchivo
 60,RATA,GADA,0,pseudopalabra,0,NA,NA
 61,RAYO,BAYE,0,pseudopalabra,0,NA,NA
 62,REY,VEY,0,pseudopalabra,0,NA,NA
-63,ROCA,oooo,0,pseudopalabra,0,NA,NA
+63,ROCA,BOMA,0,pseudopalabra,0,NA,NA
 64,ROPA,BOJA,0,pseudopalabra,0,NA,NA
-65,ROSA,oooo,0,pseudopalabra,0,NA,NA
+65,ROSA,FONA,0,pseudopalabra,0,NA,NA
 66,SAL,FAL,0,pseudopalabra,0,NA,NA
 67,SAPO,TAVO,0,pseudopalabra,0,NA,NA
 68,SOL,DOL,0,pseudopalabra,0,NA,NA
