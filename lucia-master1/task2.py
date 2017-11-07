@@ -20,9 +20,7 @@ import os
 
 # parte estimulos en bloques, manteniendo balanceado la proporción entre conImagen y sinImagen
 # randomiza el orden de items
-def getTrialList(itemImagen,itemNoImagen):
-    #constantes...
-    nBloques=4
+def getTrialList(itemImagen,itemNoImagen,nBloques):
     nItemsImagen=len(itemImagen)
     nItemsNoImagen=len(itemNoImagen)
     tamMinImagenBloque=int(ny.floor(nItemsImagen/float(nBloques)))
@@ -48,12 +46,12 @@ def getTrialList(itemImagen,itemNoImagen):
     print bloques[0]
     return(bloques)
 
-#recuadro!
+
 def presentarEstimulo(words,mywin):
     for nFrames in range(60): #tiempo de presentacion de cada palabra, a 60 Hz es 300 ms. Cada frame dura 0.01666 seg, si presento cada palabra por60 frames, cada palabra se presenta durante 1000 ms aprox
         words.draw()
+        recuadro.draw()
         mywin.flip()
-                
 
 
 def presentarImagen(estimuloImagen,mwin):
@@ -169,6 +167,7 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo,est
         #        GENERAR ISI
         ISI= ny.random.randint(60,90)
         for nFrames in range(ISI): #tendria que se random entre 1250 y 1500 x ej
+            recuadro.draw()
             mywin.flip()
 
 
@@ -191,7 +190,7 @@ def meterPausa(mywin,pausaTexto1,pausaTexto2):
 # ----------------- PRESETS --------------
 
 #           Info del experimento
-expInfo={'experimentador':'LF', 'sujeto':'000000'}
+expInfo={'condicion':['practica','expe'],'experimentador':'LF', 'sujeto':'000000'}
 expInfo['fecha']=data.getDateStr()
 dial = gui.DlgFromDict(expInfo,title='N1_semantic',fixed=['fecha','LF'])
 
@@ -211,8 +210,10 @@ else:
     frameDur = 1.0/60.0 # couldn't get a reliable measure so guess
 
 
+#archivos = 
+archivos={"experimento":"estimulos_task2_posta.csv","practica":"practica_task2.csv"}
 #abro archivo de estimulos
-archivoEstimulos=open('estimulos_task2_posta.csv')
+archivoEstimulos=open(archivos[expInfo['condicion']])
 
 ########DEFINIR NUMERO DE COLUMNA QUE TIENE INFO #####
 ncolItem=2
@@ -238,8 +239,12 @@ for l in archivoEstimulos:
         print "NO Es imagen!"
         itemNoImagen.append(tuple(f))
 
-#genero bloques
-bloques=getTrialList(itemImagen,itemNoImagen)
+
+if expInfo['condicion']=='prueba':
+    nBloques=1
+else:
+    nBloques=4
+bloques=getTrialList(itemImagen,itemNoImagen,nBloques)
 
 print 'EMPIEZA EL EXPERIMENTO'
 
@@ -264,6 +269,8 @@ fixation = visual.ShapeStim(mywin,
                 vertices=((-0.4, 0), (0.4, 0), (0,0), (0,0.4), (0,-0.4)), 
                 closeShape=False, 
                 pos= [0,0])  
+# Recuadro----
+recuadro=visual.Rect(mywin,lineWidth=1.0,lineColor='black',pos=(0,0), height=2,width=5)
 #Palabras
 estimuloTexto=visual.TextStim(win=mywin, pos=[0,0],color=[-1,-1,-1])
 #imagen
