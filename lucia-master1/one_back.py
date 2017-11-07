@@ -230,6 +230,12 @@ tamanios= {'1':1,'2':1,'3':1.8}
 archivoEstimulos=open(nombreArchivoEstimulos)
 #lista vacia de items/estimulos
 
+#------NCOL ARCHIVO ENTRADA VARIABLES
+nColItem = 2
+nColTarget=3
+nColStimType=5
+
+
 itemlist=[]
 
 for l in archivoEstimulos:
@@ -261,12 +267,6 @@ salida = open(archivoOut,'w')
 salida.write('num_item,base,item,cond_target,bloque,cond_bloque,acierto,TR\n') 
 
 
-#------NCOL ARCHIVO ENTRADA VARIABLES
-nColItem = 2
-nColTarget=3
-nColStimType=5
-
-
 ################## Estimulos graficos
 #########################3
 #Punto de fijacion
@@ -277,7 +277,7 @@ fixation = visual.ShapeStim(mywin,
                 closeShape=False, 
                 pos= [0,0])  
 # Recuadro----
-recuadro=visual.Rect(mywin,lineWidth=1.0,lineColor='black',pos=(0,0), height=2,width=5)
+recuadro=visual.Rect(mywin,lineWidth=1.0,lineColor='black',pos=(0,0), height=2,width=6)
 
 #Palabras
 estimuloTexto=visual.TextStim(win=mywin, pos=[0,0],color=[-1,-1,-1])
