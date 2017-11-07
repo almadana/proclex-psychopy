@@ -249,10 +249,11 @@ itemlist.pop(0)
 ##### GENERO bloques
 if expInfo['cond']=="practica":
     nReps=3
+    bloques=[itemlist]
 else:
     nReps=20
-#genero bloques
-bloques=getTrialList(itemlist,nReps)
+    #genero bloques
+    bloques=getTrialList(itemlist,nReps)
 
 
 #---------------OUTPUT
@@ -306,9 +307,10 @@ ensayo=0
 
 print 'EMPIEZA EL EXPERIMENTO'
 #deberìan haber dos bloques, eso es lo que devuelve getTrialList()...
-for bloque in bloques:
+for nBloque,bloque in enumerate(bloques):
+    if nBloque >0:
+        meterPausa(mywin,textoIntermedio1,textoIntermedio2)
     loopEstimulo(mywin,bloque,trialClock,fixation,estimuloTexto,salida,ensayo)
-    meterPausa(mywin,textoIntermedio1,textoIntermedio2)
 
 
 
