@@ -25,7 +25,7 @@ import os
 # C_ randomiza orden, dejando margen al principio y al final sin repetidos
 # D_ los repetidos van juntos :) (ej: cara cara nariz payaso boca mia mia)
 # E_ Dos bloques 
-nReps=20
+
 def getTrialList(itemList,nReps):
     #flankers al principio y al final, que no se van a repetir
     flankers=3
@@ -80,10 +80,10 @@ def getTrialList(itemList,nReps):
     print str(len(block1)) + " ---- " + str(len(block2))
     return([block1,block2])
 
-def presentarEstimulo(words,recuadro,mywin):
+def presentarEstimulo(words,recuadro,mywin,tipoItem):
     # digale NO a los ifs, si hay diccionarios, mejor!
-    words.setFont(fuentes[item[nColStimType]]) # elige fuente según el tipo de estímulo
-    words.setHeight(tamanios[item[nColStimType]])
+    words.setFont(fuentes[tipoItem]) # elige fuente según el tipo de estímulo
+    words.setHeight(tamanios[tipoItem])
     for nFrames in range(60): #Cada frame dura 0.01666 seg, si presento cada palabra por60 frames, cada palabra se presenta durante 1000 ms aprox
         words.draw()
         recuadro.draw()
@@ -154,7 +154,7 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo):
         trialClock.reset()
         event.clearEvents()
         # presento estimulo
-        presentarEstimulo(estimuloTexto,recuadro,mywin)
+        presentarEstimulo(estimuloTexto,recuadro,mywin,item[nColStimType])
         # LEVANTAR KEYPRESSES
         b=event.getKeys(keyList=['space'] , timeStamped=trialClock) #buscar opcion xa q se quede con el primer tr
         print 'va b'
@@ -213,7 +213,7 @@ else:
     frameDur = 1.0/60.0 # couldn't get a reliable measure so guess
 
 # archivos de estímulos para cada condición
-archivos = {'practica':'p','palabra':'palabras.csv','pseudopalabra':'pseudopalabras.csv','falsefont':'falsefont.csv'}
+archivos = {'practica':'practica_task1.csv','palabra':'palabras.csv','pseudopalabra':'pseudopalabras.csv','falsefont':'falsefont.csv'}
 nombreArchivoEstimulos=archivos[expInfo['cond']]
 
 #fuente para palabra y pseudo= arial, falsefont=BACS2sans
@@ -240,6 +240,11 @@ for l in archivoEstimulos:
 #remueve header del archivo!!!
 itemlist.pop(0)
 
+##### GENERO bloques
+if expInfo['cond']=="practica":
+    nReps=3
+else:
+    nReps=20
 #genero bloques
 bloques=getTrialList(itemlist,nReps)
 
