@@ -80,15 +80,20 @@ def getTrialList(itemList,nReps):
     print str(len(block1)) + " ---- " + str(len(block2))
     return([block1,block2])
 
-def presentarEstimulo(words,mywin):
+def presentarEstimulo(words,recuadro,mywin):
+    # digale NO a los ifs, si hay diccionarios, mejor!
+    words.setFont(fuentes[item[nColStimType]]) # elige fuente según el tipo de estímulo
+    words.setHeight(tamanios[item[nColStimType]])
     for nFrames in range(60): #Cada frame dura 0.01666 seg, si presento cada palabra por60 frames, cada palabra se presenta durante 1000 ms aprox
         words.draw()
+        recuadro.draw()
         mywin.flip()
-                
+
     #        GENERAR ISI
     ISI= ny.random.randint(60,80) #SERIA ENTREE 1000 ms a 1330 ms aprx
     print ISI
     for nFrames in range(ISI): #tendria que se random entre 1250 y 1500 x ej
+        recuadro.draw()
         mywin.flip()
 
 def getResp(esTarget,contesta):
@@ -114,8 +119,12 @@ def getResp(esTarget,contesta):
         print tResp
     return(resp,tResp)
 
-
 def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo):
+    #antes de empezar, dibujo el recuadro un par de segundos....
+    mywin.flip()
+    recuadro.draw()
+    mywin.flip()
+    core.wait(1)
     for item in block:
         
         print item
@@ -138,14 +147,14 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo):
         
         
         #preparo estímulo
-        estimulo = item[2]
+        estimulo = item[nColItem]
         print estimulo
         tt = estimulo.decode('utf-8')  #tiene que transformarse de utf-8
         estimuloTexto.setText(tt)
         trialClock.reset()
         event.clearEvents()
         # presento estimulo
-        presentarEstimulo(estimuloTexto,mywin)
+        presentarEstimulo(estimuloTexto,recuadro,mywin)
         # LEVANTAR KEYPRESSES
         b=event.getKeys(keyList=['space'] , timeStamped=trialClock) #buscar opcion xa q se quede con el primer tr
         print 'va b'
@@ -161,9 +170,9 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo):
     # 		trig.Out32(0x378,0) 
         #transformo item[2] en un número
         print "B... "+ str(b)
-        print "item 2 " +  item[2]
+        print "item 2 " +  item[nColItem]
         
-        resp,tResp = getResp(int(item[3]),b) # ojo que item[2]  està como string, lo convierto a entero para que el if quede más lindo
+        resp,tResp = getResp(int(item[nColTarget]),b) # ojo que item[2]  està como string, lo convierto a entero para que el if quede más lindo
         
        
         salida.write(item[0]+','+item[1]+','+item[2]+','+item[3]+','+item[4]+','+item[5]+','+resp+','+ str(tResp)+"\n")
@@ -184,7 +193,7 @@ def meterPausa(mywin,pausaTexto1,pausaTexto2):
 # ----------------- PRESETS --------------
 
 #           Info del experimento
-expInfo={'experimentador':'LF', 'sujeto':'000000','cond':['palabra','pseudopalabra','falsefont' ]}
+expInfo={'experimentador':'LF', 'sujeto':'000000','cond':['practica','palabra','pseudopalabra','falsefont' ]}
 expInfo['fecha']=data.getDateStr()
 dial = gui.DlgFromDict(expInfo,title='one_back',fixed=['fecha','LF'])
 
@@ -204,12 +213,14 @@ else:
     frameDur = 1.0/60.0 # couldn't get a reliable measure so guess
 
 # archivos de estímulos para cada condición
-archivos = {'palabra':'palabras.csv','pseudopalabra':'pseudopalabras.csv','falsefont':'falsefont.csv'}
+archivos = {'practica':'p','palabra':'palabras.csv','pseudopalabra':'pseudopalabras.csv','falsefont':'falsefont.csv'}
 nombreArchivoEstimulos=archivos[expInfo['cond']]
 
 #fuente para palabra y pseudo= arial, falsefont=BACS2sans
-fuentes = {'palabra':'arial','pseudopalabra':'arial','falsefont':'BACS2sans'}
-fuente=fuentes[expInfo['cond']]
+#fuentes = {'palabra':'arial','pseudopalabra':'arial','falsefont':'BACS2sans'}
+fuentes = {'1':'arial','2':'arial','3':'BACS1'}
+tamanios= {'1':1,'2':1,'3':1.8}
+#fuente=fuentes[expInfo['cond']]
 
 #lista=open('palabras_provisorio.csv')      
 #if expInfo['cond']=='pseudopalabra':
@@ -232,9 +243,8 @@ itemlist.pop(0)
 #genero bloques
 bloques=getTrialList(itemlist,nReps)
 
-print 'EMPIEZA EL EXPERIMENTO'
 
-#OUTPUT
+#---------------OUTPUT
 path=os.getcwd()
 if not os.path.exists('salida'):
     os.makedirs('salida')
@@ -246,6 +256,10 @@ salida = open(archivoOut,'w')
 salida.write('num_item,base,item,cond_target,bloque,cond_bloque,acierto,TR\n') 
 
 
+#------NCOL ARCHIVO ENTRADA VARIABLES
+nColItem = 2
+nColTarget=3
+nColStimType=5
 
 
 ################## Estimulos graficos
@@ -257,10 +271,13 @@ fixation = visual.ShapeStim(mywin,
                 vertices=((-0.4, 0), (0.4, 0), (0,0), (0,0.4), (0,-0.4)), 
                 closeShape=False, 
                 pos= [0,0])  
+# Recuadro----
+recuadro=visual.Rect(mywin,lineWidth=1.0,lineColor='black',pos=(0,0), height=2,width=5)
+
 #Palabras
-estimuloTexto=visual.TextStim(win=mywin, font=fuente, pos=[0,0],color=[-1,-1,-1])
-if expInfo["cond"]=="falsefont":
-    estimuloTexto.setHeight(1.8)
+estimuloTexto=visual.TextStim(win=mywin, pos=[0,0],color=[-1,-1,-1])
+#if expInfo["cond"]=="falsefont":
+#    estimuloTexto.setHeight(1.8)
 # Texto intermedio
 
 textoIntermedio1=visual.TextStim(win=mywin, pos=[0,0],color=[-1,-1,-1])
@@ -282,6 +299,7 @@ trialClock = core.Clock()
 
 ensayo=0
 
+print 'EMPIEZA EL EXPERIMENTO'
 #deberìan haber dos bloques, eso es lo que devuelve getTrialList()...
 for bloque in bloques:
     loopEstimulo(mywin,bloque,trialClock,fixation,estimuloTexto,salida,ensayo)
