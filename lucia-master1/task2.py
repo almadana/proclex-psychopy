@@ -112,7 +112,6 @@ def getResp(esTarget,contesta):
 
 
 def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo,estimuloImagen):
-    pathImagen="imagenes task2/"
     extension=".png"
     for item in block:
         print "ESTE ES EL ITEM COMPLETO"
@@ -212,6 +211,8 @@ else:
 
 #archivos = 
 archivos={"experimento":"estimulos_task2_posta.csv","practica":"practica_task2.csv"}
+pathImagenes={"experimento":"imagenes task2/","practica":"imagenes practica/"}
+pathImagen=pathImagenes[expInfo['condicion']]  # levanto directorio de imagenes
 #abro archivo de estimulos
 archivoEstimulos=open(archivos[expInfo['condicion']])
 
@@ -240,7 +241,7 @@ for l in archivoEstimulos:
         itemNoImagen.append(tuple(f))
 
 
-if expInfo['condicion']=='prueba':
+if expInfo['condicion']=='practica':
     nBloques=1
 else:
     nBloques=4
@@ -292,10 +293,10 @@ trialClock = core.Clock()
 ensayo=0
 
 #deberìan haber dos bloques, eso es lo que devuelve getTrialList()...
-for bloque in bloques:
+for nBloque,bloque in enumerate(bloques):
+    if nBloque>0:
+        meterPausa(mywin,pausaTexto1,pausaTexto2)
     loopEstimulo(mywin,bloque,trialClock,fixation,estimuloTexto,salida,ensayo,estimuloImagen)
-    meterPausa(mywin,pausaTexto1,pausaTexto2)
-
  
 
 mywin.close()
