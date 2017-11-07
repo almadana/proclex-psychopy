@@ -1,4 +1,4 @@
-num_item,base,item,cond_target,bloque,cond_bloque
+num_Item,base,item,cond_target,bloque,cond_bloque
 81,JUGO,JUGO,0,palabra,1
 82,PIE,PIE,0,palabra,1
 83,PERRO,PERRO,0,palabra,1
