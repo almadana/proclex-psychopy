@@ -48,7 +48,7 @@ def getTrialList(itemImagen,itemNoImagen):
     print bloques[0]
     return(bloques)
 
-
+#recuadro!
 def presentarEstimulo(words,mywin):
     for nFrames in range(60): #tiempo de presentacion de cada palabra, a 60 Hz es 300 ms. Cada frame dura 0.01666 seg, si presento cada palabra por60 frames, cada palabra se presenta durante 1000 ms aprox
         words.draw()
