@@ -210,8 +210,8 @@ else:
 
 
 #archivos = 
-archivos={"experimento":"estimulos_task2_posta.csv","practica":"practica_task2.csv"}
-pathImagenes={"experimento":"imagenes task2/","practica":"imagenes practica/"}
+archivos={"expe":"estimulos_task2_posta.csv","practica":"practica_task2.csv"}
+pathImagenes={"expe":"imagenes task2/","practica":"imagenes practica/"}
 pathImagen=pathImagenes[expInfo['condicion']]  # levanto directorio de imagenes
 #abro archivo de estimulos
 archivoEstimulos=open(archivos[expInfo['condicion']])
