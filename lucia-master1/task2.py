@@ -13,7 +13,7 @@ import os
 #from ctypes import windll
 
 #Puerto paralelo para trigger
-#trig= windll.inpout32
+trig= windll.inpout32
 
 
 #            FUNCIÓN PARA CREAR 4 bloques         
@@ -46,8 +46,14 @@ def getTrialList(itemImagen,itemNoImagen,nBloques):
     print bloques[0]
     return(bloques)
 
+def sendTrigger(trigCode):
+    trig.Out32(0x378,trigCode)
+    trig.Out32(0x378,0) # -  DESCOMENTAR EL USO DE TRIGGERS!
+    return()
 
-def presentarEstimulo(words,mywin):
+
+def presentarEstimulo(words,mywin,trigCode):
+    sendTrigger(trigCode)
     for nFrames in range(60): #tiempo de presentacion de cada palabra, a 60 Hz es 300 ms. Cada frame dura 0.01666 seg, si presento cada palabra por60 frames, cada palabra se presenta durante 1000 ms aprox
         words.draw()
         recuadro.draw()
@@ -122,6 +128,11 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo,est
         
         # function sendTrigger()
         ##código de trigger (
+        #ncolCongruencia #ncolImagen #ncolStimType
+        trigCode=item[ncolStimType]
+        if trigCode==1:
+            trigCode = trigCode + item[ncolImagen] + item[ncolCongruencia]
+        trigCode=int(trigCode)
     #    trigCode=0
     #    if item[3]=='1.1': trigCode=10 #palabra
     #    elif item[3]=='1.2': trigCode=11 #palabra target
@@ -148,7 +159,7 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo,est
         estimuloTexto.setText(tt)
         #imagen estimuloImagen
         # presento estimulo
-        presentarEstimulo(estimuloTexto,mywin)
+        presentarEstimulo(estimuloTexto,mywin,trigCode)
         # si hay imagen
         if item[ncolImagen]=="1":
             estimuloImagen.setImage(pathImagen+item[ncolArchivoImagen]+extension)
@@ -221,6 +232,7 @@ ncolItem=2
 ncolCongruencia=6
 ncolArchivoImagen=7
 ncolImagen=5
+ncolStimType = 4
 
 # la idea es separar los items entre los que llevan imagen y los que no, para balancearlo dentro de cada bloque
 itemNoImagen=[]

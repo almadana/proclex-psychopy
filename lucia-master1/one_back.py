@@ -83,7 +83,6 @@ def getTrialList(itemList,nReps):
 def sendTrigger(trigCode):
     trig.Out32(0x378,trigCode)
     trig.Out32(0x378,0) # -  DESCOMENTAR EL USO DE TRIGGERS!
-
     return()
 
 def presentarEstimulo(words,recuadro,mywin,tipoItem,trigCode):
