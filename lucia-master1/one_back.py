@@ -56,20 +56,17 @@ def getTrialList(itemList,nReps):
     itemsARepetir1=ny.array(sorted(permItemList1[range(mitad1nReps)]))
     itemsARepetir2=ny.array(sorted(permItemList2[range(mitad2nReps)]))
     #donde van a ir al final, antes de aleatorizar
-    print block1
     itemsARepetir1a=itemsARepetir1 +  ny.arange(len(itemsARepetir1))
     itemsARepetir2a=itemsARepetir2 +  ny.arange(len(itemsARepetir2))
     posAInsertar1=itemsARepetir1a + 1
     posAInsertar2=itemsARepetir2a + 1
     
     
-    print itemsARepetir1, block1[itemsARepetir1[0]+flankers] , block1[itemsARepetir1[1]+flankers]
     for indice,posicion in enumerate(posAInsertar1):
         nuevoTrial = tuple(block1[itemsARepetir1a[indice]+flankers])
         nItem,base,item,cond_target,bloque,e = nuevoTrial
         nuevoTrial = (nItem,base,item,'1',bloque,e)
         # en la posicion posAInsertar, inserto el item numero itemsARepetir[indice] de la lista
-        print "insertandoooo"
         block1.insert(flankers+posicion,nuevoTrial)
     for indice,posicion in enumerate(posAInsertar2):
     # en la posicion posAInsertar, inserto el item numero itemsARepetir[indice] de la lista
@@ -77,7 +74,6 @@ def getTrialList(itemList,nReps):
         nItem,base,item,cond_target,bloque,e  = nuevoTrial
         nuevoTrial = (nItem,base,item,'1',bloque,e)
         block2.insert(flankers+posicion,nuevoTrial)
-    print str(len(block1)) + " ---- " + str(len(block2))
     return([block1,block2])
 
 def sendTrigger(trigCode):
@@ -243,8 +239,6 @@ archivosAudio={'inicio_1':'audio_task1_1','inicio_2':'audio_task1_2','pausa':'au
 audios = dict()
 for clave in archivosAudio.keys():
     audios[clave] = sound.Sound(path_audios+archivosAudio[clave]+extensionAudio)
-
-audioInstrucciones = sound.Sound()
 
 #abro archivo de estimulos
 archivoEstimulos=open(nombreArchivoEstimulos)

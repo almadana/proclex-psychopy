@@ -6,14 +6,14 @@
 #"trial"=cond
 
 from __future__  import division
-from psychopy import visual, core, event, gui, data
+from psychopy import visual, core, event, gui, data, sound
 import numpy as ny
 import os
 
 #from ctypes import windll
 
 #Puerto paralelo para trigger
-trig= windll.inpout32
+#trig= windll.inpout32
 
 
 #            FUNCIÓN PARA CREAR 4 bloques         
@@ -23,9 +23,17 @@ trig= windll.inpout32
 def getTrialList(itemImagen,itemNoImagen,nBloques):
     nItemsImagen=len(itemImagen)
     nItemsNoImagen=len(itemNoImagen)
-    tamMinImagenBloque=int(ny.floor(nItemsImagen/float(nBloques)))
-    tamMinNoImagenBloque=int(ny.floor(nItemsNoImagen/float(nBloques)))
+    tamMaxImagenBloque=int(ny.ceil(nItemsImagen/float(nBloques)))
+    tamMaxNoImagenBloque=int(ny.ceil(nItemsNoImagen/float(nBloques)))
+    nTamMaxImagenBloque=int(ny.remainder(nItemsImagen,float(nBloques)))
+    nTamMaxNoImagenBloque=int(ny.remainder(nItemsNoImagen,float(nBloques)))
     
+    print "nTamMaxImagenBloque"
+    print nTamMaxImagenBloque
+    print "nTamMaxNoImagenBloque"
+    print nTamMaxImagenBloque
+    print tamMaxImagenBloque
+    print tamMaxNoImagenBloque
     
     #randomizo
     itemImagen=list(ny.random.permutation(itemImagen))
@@ -34,21 +42,26 @@ def getTrialList(itemImagen,itemNoImagen,nBloques):
     #reparto items en bloques
     bloques=[]
     for nBloque in range(nBloques):
+        indice0Imagen=nBloque*tamMaxImagenBloque
+        indice0NoImagen=nBloque*tamMaxNoImagenBloque
+        if nBloque == nTamMaxImagenBloque:
+            tamMaxImagenBloque -=1
+        if nBloque == nTamMaxNoImagenBloque:
+            tamMaxNoImagenBloque -=1
         #agrego 
         print "NBLOQ"
         print nBloque
-        print tamMinImagenBloque
-        esteBloque= itemImagen[nBloque*tamMinImagenBloque:(nBloque+1)*tamMinImagenBloque]  
-        esteBloque.extend( itemNoImagen[nBloque*tamMinNoImagenBloque:(nBloque+1)*tamMinNoImagenBloque] )
+        esteBloque= itemImagen[indice0Imagen:(nBloque+1)*tamMaxImagenBloque]  
+        esteBloque.extend( itemNoImagen[indice0NoImagen:(nBloque+1)*tamMaxNoImagenBloque] )
         esteBloque=list(ny.random.permutation(esteBloque))
         bloques.append(esteBloque)
-        print "BLOQUEEE::" + str(esteBloque[0])
-    print bloques[0]
+        print len(esteBloque)
+        print "***************"
     return(bloques)
 
 def sendTrigger(trigCode):
-    trig.Out32(0x378,trigCode)
-    trig.Out32(0x378,0) # -  DESCOMENTAR EL USO DE TRIGGERS!
+    #trig.Out32(0x378,trigCode)
+    #trig.Out32(0x378,0) # -  DESCOMENTAR EL USO DE TRIGGERS!
     return()
 
 
@@ -181,22 +194,14 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo,est
             mywin.flip()
 
 
-def meterPausa(mywin,pausaTexto1,pausaTexto2):
+def presentarInstruccion(clave):
+    imagenInstrucciones.setImage(path_imagenes+archivosImagen[clave]+extension)
+    audios[clave].play()
     mywin.flip()
-    pausaTexto1.draw()
+    imagenInstrucciones.draw()
     mywin.flip()
-    core.wait(3) # pausa obligatoria
+    core.wait(5) # pausa obligatoria
     event.waitKeys()
-    mywin.flip()
-    pausaTexto2.draw()
-    mywin.flip()
-    core.wait(1)
-    event.waitKeys()
-    mywin.flip()
-    core.wait(1)
-    
-    
-    
 # ----------------- PRESETS --------------
 
 #           Info del experimento
@@ -220,6 +225,20 @@ else:
     frameDur = 1.0/60.0 # couldn't get a reliable measure so guess
 
 
+#archivos de imagen
+path_imagenes='./'
+extension='.png'
+archivosImagen={'inicio_1':'instrucciones_task1_1','inicio_2':'instrucciones_task1_2','pausa1':'instrucciones_task1_pausa','pausa2':'instrucciones_task1_pausa','fin':'instrucciones_task1_fin'}
+imagenInstrucciones = visual.ImageStim(win=mywin,pos=(0,0))
+extensionAudio='.wav'
+path_audios='./'
+archivosAudio={'inicio_1':'audio_task1_1','inicio_2':'audio_task1_2','pausa1':'audio_task1_pausa','pausa2':'audio_task1_pausa','fin':'audio_task1_fin'}
+audios = dict()
+for clave in archivosAudio.keys():
+    audios[clave] = sound.Sound(path_audios+archivosAudio[clave]+extensionAudio)
+
+
+
 #archivos = 
 archivos={"expe":"estimulos_task2_posta.csv","practica":"practica_task2.csv"}
 pathImagenes={"expe":"imagenes task2/","practica":"imagenes practica/"}
@@ -232,7 +251,7 @@ ncolItem=2
 ncolCongruencia=6
 ncolArchivoImagen=7
 ncolImagen=5
-ncolStimType = 4
+ncolStimType = 3
 
 # la idea es separar los items entre los que llevan imagen y los que no, para balancearlo dentro de cada bloque
 itemNoImagen=[]
@@ -304,12 +323,18 @@ trialClock = core.Clock()
 
 ensayo=0
 
+presentarInstruccion('inicio_1')
+presentarInstruccion('inicio_2')
 #deberìan haber dos bloques, eso es lo que devuelve getTrialList()...
 for nBloque,bloque in enumerate(bloques):
     if nBloque>0:
-        meterPausa(mywin,pausaTexto1,pausaTexto2)
+        if nBloque==2:
+            presentarInstruccion('pausa2')
+        else:
+            presentarInstruccion('pausa1')
     loopEstimulo(mywin,bloque,trialClock,fixation,estimuloTexto,salida,ensayo,estimuloImagen)
- 
+presentarInstruccion('fin')
+
 
 mywin.close()
 salida.close()
