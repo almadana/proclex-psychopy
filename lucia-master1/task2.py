@@ -40,23 +40,29 @@ def getTrialList(itemImagen,itemNoImagen,nBloques):
     itemNoImagen=list(ny.random.permutation(itemNoImagen))
     
     #reparto items en bloques
+    indice0Imagen=0
+    indice0NoImagen=0
+    
     bloques=[]
     for nBloque in range(nBloques):
-        indice0Imagen=nBloque*tamMaxImagenBloque
-        indice0NoImagen=nBloque*tamMaxNoImagenBloque
-        if nBloque == nTamMaxImagenBloque:
-            tamMaxImagenBloque -=1
-        if nBloque == nTamMaxNoImagenBloque:
-            tamMaxNoImagenBloque -=1
-        #agrego 
+        if nBloque==nTamMaxImagenBloque:
+            tamMaxImagenBloque-=1
+        if nBloque==nTamMaxNoImagenBloque:
+            tamMaxNoImagenBloque-=1
+        lastImagen=indice0Imagen+tamMaxImagenBloque
+        lastNoImagen=indice0NoImagen+tamMaxNoImagenBloque
+        
         print "NBLOQ"
         print nBloque
-        esteBloque= itemImagen[indice0Imagen:(nBloque+1)*tamMaxImagenBloque]  
-        esteBloque.extend( itemNoImagen[indice0NoImagen:(nBloque+1)*tamMaxNoImagenBloque] )
+        esteBloque= itemImagen[indice0Imagen:lastImagen]  
+        esteBloque.extend( itemNoImagen[indice0NoImagen:lastNoImagen] )
         esteBloque=list(ny.random.permutation(esteBloque))
         bloques.append(esteBloque)
         print len(esteBloque)
         print "***************"
+        indice0Imagen=lastImagen
+        indice0NoImagen=lastNoImagen
+
     return(bloques)
 
 def sendTrigger(trigCode):
