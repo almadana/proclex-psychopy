@@ -1,0 +1,3 @@
+num_item,item, tipoEstimulo, cod_tipoEstimulo, tipo_pal, frec, frec_ac, num_caract, estr, acierto,TR
+83,PERRO,NERRA,pseudopalabra,0,0,NA,NA,NA,NA
+88,BICI,,palabra,1,1,0,FLOR,NA,NA
