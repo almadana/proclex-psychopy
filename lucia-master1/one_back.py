@@ -80,10 +80,14 @@ def getTrialList(itemList,nReps):
     print str(len(block1)) + " ---- " + str(len(block2))
     return([block1,block2])
 
-def presentarEstimulo(words,recuadro,mywin,tipoItem):
+def sendTrigger(trigCode):
+    return()
+
+def presentarEstimulo(words,recuadro,mywin,tipoItem,trigCode):
     # digale NO a los ifs, si hay diccionarios, mejor!
     words.setFont(fuentes[tipoItem]) # elige fuente según el tipo de estímulo
     words.setHeight(tamanios[tipoItem])
+    sendTrigger(trigCode)
     for nFrames in range(60): #Cada frame dura 0.01666 seg, si presento cada palabra por60 frames, cada palabra se presenta durante 1000 ms aprox
         words.draw()
         recuadro.draw()
@@ -133,14 +137,21 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo):
         
         
         ##código de trigger (
-    #    trigCode=0
+        codigo = item[nColStimType] + item[nColTarget]
+        trigCode = int(codigo)
+        print "codigoo"
+        print codigo
+        print "*********"
+        print trigCode
+#    trigCode=0
     #    if item[3]=='1.1': trigCode=10 #palabra
     #    elif item[3]=='1.2': trigCode=11 #palabra target
     #    elif item[3]=='1.3': trigCode=20 #pseudopalabra
     #    elif item[3]=='1.4': trigCode=21 #pseudopalabra target
     #    elif item[3]=='2.1': trigCode=30 #false font
     #    elif item[3]=='2.2': trigCode=31 #false font target
-
+    # nColTarget=3   # 0 1
+    #nColStimType=5   ·# 1 2 3 
     #
     #    print 'trigCode'
     #    print trigCode
@@ -154,7 +165,7 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo):
         trialClock.reset()
         event.clearEvents()
         # presento estimulo
-        presentarEstimulo(estimuloTexto,recuadro,mywin,item[nColStimType])
+        presentarEstimulo(estimuloTexto,recuadro,mywin,item[nColStimType],trigCode)
         # LEVANTAR KEYPRESSES
         b=event.getKeys(keyList=['space'] , timeStamped=trialClock) #buscar opcion xa q se quede con el primer tr
         print 'va b'
@@ -232,8 +243,8 @@ archivoEstimulos=open(nombreArchivoEstimulos)
 
 #------NCOL ARCHIVO ENTRADA VARIABLES
 nColItem = 2
-nColTarget=3
-nColStimType=5
+nColTarget = 3   # 0 1
+nColStimType = 5 # 1 2 3 
 
 
 itemlist=[]
