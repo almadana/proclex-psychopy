@@ -1,31 +1,46 @@
 num_Item,base,item,cond_target,bloque,cond_bloque
 81,JUGO,JUGO,0,palabra,1
 82,PIE,PIE,0,palabra,1
+82,PIE,PIE,1,palabra,1
 83,PERRO,PERRO,0,palabra,1
 84,QUESO,QUESO,0,palabra,1
 85,GLOBO,GLOBO,0,palabra,1
 86,LAPIZ,LAPIZ,0,palabra,1
 87,MIEL,MIEL,0,palabra,1
+87,MIEL,MIEL,1,palabra,1
 88,BICI,BICI,0,palabra,1
+88,BICI,BICI,1,palabra,1
 89,FARO,FARO,0,palabra,1
+89,FARO,FARO,1,palabra,1
 90,FLOR,FLOR,0,palabra,1
 81,JUGO,RUMO,0,pseudopalabr,2
 82,PIE,TIE,0,pseudopalabr,2
 83,PERRO,NERRA,0,pseudopalabr,2
+83,PERRO,NERRA,1,pseudopalabr,2
 84,QUESO,QUEGA,0,pseudopalabr,2
 85,GLOBO,BLOTO,0,pseudopalabr,2
+85,GLOBO,BLOTO,1,pseudopalabr,2
 86,LAPIZ,TAFIR,0,pseudopalabr,2
 87,MIEL,DIEL,0,pseudopalabr,2
+87,MIEL,DIEL,1,pseudopalabr,2
 88,BICI,RIDI,0,pseudopalabr,2
+88,BICI,RIDI,1,pseudopalabr,2
 89,FARO,GORA,0,pseudopalabr,2
 90,FLOR,CLAB,0,pseudopalabr,2
 81,JUGO,JUGO,0,false font,3
 82,PIE,PIE,0,false font,3
 83,PERRO,PERRO,0,false font,3
+82,PIE,PIE,1,false font,3
+83,PERRO,PERRO,0,false font,3
+83,PERRO,PERRO,1,false font,3
 84,QUESO,QUESO,0,false font,3
 85,GLOBO,GLOBO,0,false font,3
 86,LAPIZ,LAPIZ,0,false font,3
 87,MIEL,MIEL,0,false font,3
 88,BICI,BICI,0,false font,3
 89,FARO,FARO,0,false font,3
+87,MIEL,MIEL,1,false font,3
+88,BICI,BICI,0,false font,3
+89,FARO,FARO,0,false font,3
+89,FARO,FARO,1,false font,3
 90,FLOR,FLOR,0,false font,3
