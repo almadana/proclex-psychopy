@@ -1,6 +1,6 @@
 num_item,base,item,tipo_estim,cod_tipo_estim,imagen,congruencia,nombreArchivo
 1,ARO,ARO,1,palabra,0,0,NA
-2,BAÑO,BANO,1,palabra,0,0,NA
+2,BAÑO,BAÑO,1,palabra,0,0,NA
 3,BESO,BESO,1,palabra,1,1,BESO
 4,BOCA,BOCA,1,palabra,1,1,BOCA
 5,BOTA,BOTA,1,palabra,0,0,NA
@@ -27,7 +27,7 @@ num_item,base,item,tipo_estim,cod_tipo_estim,imagen,congruencia,nombreArchivo
 26,LAGO,LAGO,1,palabra,1,1,LAGO
 27,LANA,LANA,1,palabra,0,0,NA
 28,LATA,LATA,1,palabra,0,0,NA
-29,LEÑA,LENA,1,palabra,1,0,LUPA
+29,LEÑA,LEÑA,1,palabra,1,0,LUPA
 30,LOBO,LOBO,1,palabra,0,0,NA
 31,LORO,LORO,1,palabra,1,0,BOTE
 32,LUNA,LUNA,1,palabra,1,1,LUNA
@@ -41,7 +41,7 @@ num_item,base,item,tipo_estim,cod_tipo_estim,imagen,congruencia,nombreArchivo
 40,MONO,MONO,1,palabra,0,0,NA
 41,MOTO,MOTO,1,palabra,0,0,NA
 42,NIDO,NIDO,1,palabra,1,0,MAGO
-43,NIÑO,NINO,1,palabra,0,0,NA
+43,NIÑO,NIÑO,1,palabra,0,0,NA
 44,NUBE,NUBE,1,palabra,1,0,CINE
 45,OJO,OJO,1,palabra,1,0,COPA
 46,OLA,OLA,1,palabra,0,0,NA
@@ -73,20 +73,20 @@ num_item,base,item,tipo_estim,cod_tipo_estim,imagen,congruencia,nombreArchivo
 72,TAZA,TAZA,1,palabra,0,0,NA
 73,TELA,TELA,1,palabra,1,0,PATO
 74,TORO,TORO,1,palabra,0,0,NA
-75,UÑA,UNA,1,palabra,1,0,PAN
+75,UÑA,UÑA,1,palabra,1,0,PAN
 76,UVA,UVA,1,palabra,1,0,ROPA
 77,VACA,VACA,1,palabra,0,0,NA
 78,VASO,VASO,1,palabra,0,0,NA
 79,VELA,VELA,1,palabra,1,0,PEZ
 80,VINO,VINO,1,palabra,0,0,NA
 1,ARO,EJO,0,pseudopalabra,0,NA,NA
-2,BAÃ‘O,LAFO,0,pseudopalabra,0,NA,NA
+2,BAÑO,LAFO,0,pseudopalabra,0,NA,NA
 3,BESO,REDO,0,pseudopalabra,0,NA,NA
 4,BOCA,LOGA,0,pseudopalabra,0,NA,NA
 5,BOTA,LETA,0,pseudopalabra,0,NA,NA
 6,BOTE,LOME,0,pseudopalabra,0,NA,NA
 7,CAJA,MAVA,0,pseudopalabra,0,NA,NA
-8,CAMA,PAÃ‘A,0,pseudopalabra,0,NA,NA
+8,CAMA,PAÑA,0,pseudopalabra,0,NA,NA
 9,CAPA,MAFA,0,pseudopalabra,0,NA,NA
 10,CARA,RAPA,0,pseudopalabra,0,NA,NA
 11,CASA,MABA,0,pseudopalabra,0,NA,NA
@@ -107,7 +107,7 @@ num_item,base,item,tipo_estim,cod_tipo_estim,imagen,congruencia,nombreArchivo
 26,LAGO,RACO,0,pseudopalabra,0,NA,NA
 27,LANA,FALA,0,pseudopalabra,0,NA,NA
 28,LATA,GACA,0,pseudopalabra,0,NA,NA
-29,LEÃ‘A,LIBA,0,pseudopalabra,0,NA,NA
+29,LEÃƒâ€˜A,LIBA,0,pseudopalabra,0,NA,NA
 30,LOBO,BOGO,0,pseudopalabra,0,NA,NA
 31,LORO,VONO,0,pseudopalabra,0,NA,NA
 32,LUNA,FUSA,0,pseudopalabra,0,NA,NA
@@ -121,7 +121,7 @@ num_item,base,item,tipo_estim,cod_tipo_estim,imagen,congruencia,nombreArchivo
 40,MONO,COBO,0,pseudopalabra,0,NA,NA
 41,MOTO,SOCO,0,pseudopalabra,0,NA,NA
 42,NIDO,GEDO,0,pseudopalabra,0,NA,NA
-43,NIÃ‘O,GIJO,0,pseudopalabra,0,NA,NA
+43,NIÃƒâ€˜O,GIJO,0,pseudopalabra,0,NA,NA
 44,NUBE,GUPE,0,pseudopalabra,0,NA,NA
 45,OJO,ENO,0,pseudopalabra,0,NA,NA
 46,OLA,EBA,0,pseudopalabra,0,NA,NA
@@ -153,7 +153,7 @@ num_item,base,item,tipo_estim,cod_tipo_estim,imagen,congruencia,nombreArchivo
 72,TAZA,RAGA,0,pseudopalabra,0,NA,NA
 73,TELA,BENA,0,pseudopalabra,0,NA,NA
 74,TORO,BODO,0,pseudopalabra,0,NA,NA
-75,UÃ‘A,IGA,0,pseudopalabra,0,NA,NA
+75,UÃƒâ€˜A,IGA,0,pseudopalabra,0,NA,NA
 76,UVA,IMA,0,pseudopalabra,0,NA,NA
 77,VACA,FADA,0,pseudopalabra,0,NA,NA
 78,VASO,FANO,0,pseudopalabra,0,NA,NA
