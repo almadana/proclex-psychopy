@@ -13,7 +13,7 @@ import os
 #from ctypes import windll
 
 #Puerto paralelo para trigger
-#trig= windll.inpout32
+trig= windll.inpout32
 
 
 #            FUNCIÓN PARA CREAR LISTAS CON REPETICIONES ALEATORIAS         
@@ -81,6 +81,9 @@ def getTrialList(itemList,nReps):
     return([block1,block2])
 
 def sendTrigger(trigCode):
+    trig.Out32(0x378,trigCode)
+    trig.Out32(0x378,0) # -  DESCOMENTAR EL USO DE TRIGGERS!
+
     return()
 
 def presentarEstimulo(words,recuadro,mywin,tipoItem,trigCode):
