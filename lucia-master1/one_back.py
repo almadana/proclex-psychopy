@@ -6,14 +6,14 @@
 #"trial"=cond
 
 from __future__  import division
-from psychopy import visual, core, event, gui, data
+from psychopy import visual, core, event, gui, data, sound
 import numpy as ny
 import os
 
 #from ctypes import windll
 
 #Puerto paralelo para trigger
-trig= windll.inpout32
+#trig= windll.inpout32
 
 
 #            FUNCIÓN PARA CREAR LISTAS CON REPETICIONES ALEATORIAS         
@@ -81,8 +81,8 @@ def getTrialList(itemList,nReps):
     return([block1,block2])
 
 def sendTrigger(trigCode):
-    trig.Out32(0x378,trigCode)
-    trig.Out32(0x378,0) # -  DESCOMENTAR EL USO DE TRIGGERS!
+    #trig.Out32(0x378,trigCode)
+    #trig.Out32(0x378,0) # -  DESCOMENTAR EL USO DE TRIGGERS!
     return()
 
 def presentarEstimulo(words,recuadro,mywin,tipoItem,trigCode):
@@ -190,19 +190,14 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo):
        
         salida.write(item[0]+','+item[1]+','+item[2]+','+item[3]+','+item[4]+','+item[5]+','+resp+','+ str(tResp)+"\n")
 
-def meterPausa(mywin,pausaTexto1,pausaTexto2):
+def presentarInstruccion(clave):
+    imagenInstrucciones.setImage(path_imagenes+archivosImagen[clave]+extension)
+    audios[clave].play()
     mywin.flip()
-    pausaTexto1.draw()
+    imagenInstrucciones.draw()
     mywin.flip()
     core.wait(5) # pausa obligatoria
     event.waitKeys()
-    mywin.flip()
-    pausaTexto2.draw()
-    mywin.flip()
-    core.wait(2)
-    event.waitKeys()
-    mywin.flip()
-    core.wait(2)
 # ----------------- PRESETS --------------
 
 #           Info del experimento
@@ -229,15 +224,27 @@ else:
 archivos = {'practica':'practica_task1.csv','palabra':'palabras.csv','pseudopalabra':'pseudopalabras.csv','falsefont':'falsefont.csv'}
 nombreArchivoEstimulos=archivos[expInfo['cond']]
 
+
+
 #fuente para palabra y pseudo= arial, falsefont=BACS2sans
 #fuentes = {'palabra':'arial','pseudopalabra':'arial','falsefont':'BACS2sans'}
 fuentes = {'1':'arial','2':'arial','3':'BACS1'}
 tamanios= {'1':1,'2':1,'3':1.8}
 #fuente=fuentes[expInfo['cond']]
 
-#lista=open('palabras_provisorio.csv')      
-#if expInfo['cond']=='pseudopalabra':
-#lista=open('pseudopalabras_provisorio.csv'     y false (lo pongo las 3 veces y fue?)
+#archivos de imagen
+path_imagenes='./'
+extension='.png'
+archivosImagen={'inicio_1':'instrucciones_task1_1','inicio_2':'instrucciones_task1_2','pausa':'instrucciones_task1_pausa','fin':'instrucciones_task1_fin'}
+imagenInstrucciones = visual.ImageStim(win=mywin,pos=(0,0))
+extensionAudio='.wav'
+path_audios='./'
+archivosAudio={'inicio_1':'audio_task1_1','inicio_2':'audio_task1_2','pausa':'audio_task1_pausa','fin':'audio_task1_fin'}
+audios = dict()
+for clave in archivosAudio.keys():
+    audios[clave] = sound.Sound(path_audios+archivosAudio[clave]+extensionAudio)
+
+audioInstrucciones = sound.Sound()
 
 #abro archivo de estimulos
 archivoEstimulos=open(nombreArchivoEstimulos)
@@ -299,10 +306,10 @@ estimuloTexto=visual.TextStim(win=mywin, pos=[0,0],color=[-1,-1,-1])
 #    estimuloTexto.setHeight(1.8)
 # Texto intermedio
 
-textoIntermedio1=visual.TextStim(win=mywin, pos=[0,0],color=[-1,-1,-1])
-textoIntermedio1.setText("BIen! es hora de hacer un descansoo...!!!")
-textoIntermedio2=visual.TextStim(win=mywin, pos=[0,0],color=[-1,-1,-1])
-textoIntermedio2.setText("Seguimos..!!!... Presiona cualquier tecla para continuar")
+#textoIntermedio1=visual.TextStim(win=mywin, pos=[0,0],color=[-1,-1,-1])
+#textoIntermedio1.setText("BIen! es hora de hacer un descansoo...!!!")
+#textoIntermedio2=visual.TextStim(win=mywin, pos=[0,0],color=[-1,-1,-1])
+#textoIntermedio2.setText("Seguimos..!!!... Presiona cualquier tecla para continuar")
 
 
 
@@ -319,11 +326,17 @@ trialClock = core.Clock()
 ensayo=0
 
 print 'EMPIEZA EL EXPERIMENTO'
+
+#instrucciones
+
+presentarInstruccion('inicio_1')
+presentarInstruccion('inicio_2')
 #deberìan haber dos bloques, eso es lo que devuelve getTrialList()...
 for nBloque,bloque in enumerate(bloques):
     if nBloque >0:
-        meterPausa(mywin,textoIntermedio1,textoIntermedio2)
+        presentarInstruccion('pausa')
     loopEstimulo(mywin,bloque,trialClock,fixation,estimuloTexto,salida,ensayo)
+presentarInstruccion('fin')
 
 
 
