@@ -234,11 +234,11 @@ else:
 #archivos de imagen
 path_imagenes='./'
 extension='.png'
-archivosImagen={'inicio_1':'instrucciones_task1_1','inicio_2':'instrucciones_task1_2','pausa1':'instrucciones_task1_pausa','pausa2':'instrucciones_task1_pausa','fin':'instrucciones_task1_fin'}
+archivosImagen={'practica1':'practica1_task1','practica2':'practica2_task1','inicio_1':'instrucciones_task1_1','inicio_2':'instrucciones_task1_2','pausa1':'instrucciones_task1_pausa','pausa2':'instrucciones_task1_pausa','fin':'instrucciones_task1_fin'}
 imagenInstrucciones = visual.ImageStim(win=mywin,pos=(0,0))
 extensionAudio='.wav'
 path_audios='./'
-archivosAudio={'inicio_1':'audio_task1_1','inicio_2':'audio_task1_2','pausa1':'audio_task1_pausa','pausa2':'audio_task1_pausa','fin':'audio_task1_fin'}
+archivosAudio={'practica1':'audio1_task1','practica2':'audio2_task1','inicio_1':'audio_task1_1','inicio_2':'audio_task1_2','pausa1':'audio_task1_pausa','pausa2':'audio_task1_pausa','fin':'audio_task1_fin'}
 audios = dict()
 for clave in archivosAudio.keys():
     audios[clave] = sound.Sound(path_audios+archivosAudio[clave]+extensionAudio)
@@ -328,9 +328,12 @@ globalClock = core.Clock()
 trialClock = core.Clock()
 
 ensayo=0
-
-presentarInstruccion('inicio_1')
-presentarInstruccion('inicio_2')
+if expInfo['cond']=='practica':
+    presentarInstruccion('practica1')
+    presentarInstruccion('practica2')
+else:
+    presentarInstruccion('inicio_1')
+    presentarInstruccion('inicio_2')
 #deberìan haber dos bloques, eso es lo que devuelve getTrialList()...
 for nBloque,bloque in enumerate(bloques):
     if nBloque>0:
