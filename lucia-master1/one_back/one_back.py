@@ -233,7 +233,7 @@ path_imagenes='./'
 extension='.png'
 
 
-archivosImagen={'practica1':'intro_practica_task1','practica2':'intro_practica_task1','inicio_1':'intro_expe_task1_1','inicio_2':'intro_expe_task1_2','pausa':'pausa_intermedia_task1','fin':'fin_bloque_task1'}
+archivosImagen={'practica1':'intro_practica_task1','inicio_1':'intro_expe_task1_1','inicio_2':'intro_expe_task1_2','pausa':'pausa_intermedia_task1','fin':'fin_bloque_task1'}
 imagenInstrucciones = visual.ImageStim(win=mywin,pos=(0,0))
 extensionAudio='.wav'
 path_audios='./'
@@ -327,7 +327,6 @@ print 'EMPIEZA EL EXPERIMENTO'
 
 if expInfo['cond']=='practica':
     presentarInstruccion('practica1')
-    presentarInstruccion('practica2')
 else:
     presentarInstruccion('inicio_1')
     presentarInstruccion('inicio_2')

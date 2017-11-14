@@ -238,7 +238,7 @@ archivosImagen={'practica1':'practica1_task1','practica2':'practica2_task1','ini
 imagenInstrucciones = visual.ImageStim(win=mywin,pos=(0,0))
 extensionAudio='.wav'
 path_audios='./'
-archivosAudio={'practica1':'audio1_task1','practica2':'audio2_task1','inicio_1':'audio_task1_1','inicio_2':'audio_task1_2','pausa1':'audio_task1_pausa','pausa2':'audio_task1_pausa','fin':'audio_task1_fin'}
+archivosAudio={'practica1':'audio_task1_1','practica2':'audio_task1_1','inicio_1':'audio_task1_1','inicio_2':'audio_task1_2','pausa1':'audio_task1_pausa','pausa2':'audio_task1_pausa','fin':'audio_task1_fin'}
 audios = dict()
 for clave in archivosAudio.keys():
     audios[clave] = sound.Sound(path_audios+archivosAudio[clave]+extensionAudio)
@@ -328,7 +328,7 @@ globalClock = core.Clock()
 trialClock = core.Clock()
 
 ensayo=0
-if expInfo['cond']=='practica':
+if expInfo['condicion']=='practica':
     presentarInstruccion('practica1')
     presentarInstruccion('practica2')
 else:
