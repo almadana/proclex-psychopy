@@ -235,7 +235,7 @@ extension='.png'
 
 archivosImagen={'practica1':'intro_practica_task1','inicio_1':'intro_expe_task1_1','inicio_2':'intro_expe_task1_2','pausa':'pausa_intermedia_task1','fin':'fin_bloque_task1'}
 imagenInstrucciones = visual.ImageStim(win=mywin,pos=(0,0))
-extensionAudio='.M4A'
+extensionAudio='.wav'
 path_audios='./'
 archivosAudio={'practica1':'audio_intro_practica_task1','inicio_1':'audio_intro_expe_task1_1','inicio_2':'Intro_Expe_2','pausa':'audio_pausa_intermedia_task1','fin':'audio_fin_bloque_task 1'}
 audios = dict()
