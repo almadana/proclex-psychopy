@@ -240,7 +240,7 @@ archivosImagen={'practica1':'intro_practica_task2','inicio_1':'intro_expe_task2_
 imagenInstrucciones = visual.ImageStim(win=mywin,pos=(0,0))
 extensionAudio='.wav'
 path_audios='./'
-archivosAudio={'practica1':'audio_task1_1','inicio_1':'audio_task1_1','inicio_2':'audio_task1_2','pausa1':'audio_task1_pausa','pausa2':'audio_task1_pausa','fin':'audio_task1_fin'}
+archivosAudio={'practica1':'IntroPracticaTask2','inicio_1':'IntroPracticaTask2','inicio_2':'IntroExpe2Task2','pausa1':'PausaIntermediaTask2','pausa2':'FinBloque1task2','fin':'FinBloque1task2'}
 audios = dict()
 for clave in archivosAudio.keys():
     audios[clave] = sound.Sound(path_audios+archivosAudio[clave]+extensionAudio)
