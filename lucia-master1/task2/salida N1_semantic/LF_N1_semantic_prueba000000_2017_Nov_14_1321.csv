@@ -1,0 +1,4 @@
+num_item,item, tipoEstimulo, cod_tipoEstimulo, tipo_pal, frec, frec_ac, num_caract, estr, acierto,TR
+84,"QUESO","QUEGA",0,"pseudopalabra",0,"NA","NA",NA,NA
+83,"PERRO","NERRA",0,"pseudopalabra",0,"NA","NA",NA,NA
+89,"FARO","GORA",0,"pseudopalabra",0,"NA","NA",NA,NA

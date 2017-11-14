@@ -12,7 +12,7 @@ import os
 
 #from ctypes import windll
 
-#Puerto paralelo para trigger
+#Puerto paralelo para gger
 #trig= windll.inpout32
 
 
@@ -66,9 +66,8 @@ def getTrialList(itemImagen,itemNoImagen,nBloques):
     return(bloques)
 
 def sendTrigger(trigCode):
-    #trig.Out32(0x378,trigCode)
-    #trig.Out32(0x378,0) # -  DESCOMENTAR EL USO DE TRIGGERS!
-    return()
+    #trig.Out32(0x378,trigCode) # -  DESCOMENTAR EL USO DE TRIGGERS! 
+    return() 
 
 
 def presentarEstimulo(words,mywin,trigCode):
@@ -77,6 +76,8 @@ def presentarEstimulo(words,mywin,trigCode):
         words.draw()
         recuadro.draw()
         mywin.flip()
+    #trig.Out32(0x378,0) # -  DESCOMENTAR EL USO DE TRIGGERS!   
+    
 
 
 def presentarImagen(estimuloImagen,mwin):
@@ -179,6 +180,7 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo,est
         #imagen estimuloImagen
         # presento estimulo
         presentarEstimulo(estimuloTexto,mywin,trigCode)
+        
         # si hay imagen
         if item[ncolImagen]=="1":
             estimuloImagen.setImage(pathImagen+item[ncolArchivoImagen]+extension)
@@ -234,11 +236,11 @@ else:
 #archivos de imagen
 path_imagenes='./'
 extension='.png'
-archivosImagen={'practica1':'practica1_task1','practica2':'practica2_task1','inicio_1':'instrucciones_task1_1','inicio_2':'instrucciones_task1_2','pausa1':'instrucciones_task1_pausa','pausa2':'instrucciones_task1_pausa','fin':'instrucciones_task1_fin'}
+archivosImagen={'practica1':'intro_practica_task2','inicio_1':'intro_expe_task2_1','inicio_2':'intro_expe_task2_2','pausa1':'pausa_intermedia_task2','pausa2':'fin_bloque1_task 2','fin':'final_task2'}
 imagenInstrucciones = visual.ImageStim(win=mywin,pos=(0,0))
 extensionAudio='.wav'
 path_audios='./'
-archivosAudio={'practica1':'audio_task1_1','practica2':'audio_task1_1','inicio_1':'audio_task1_1','inicio_2':'audio_task1_2','pausa1':'audio_task1_pausa','pausa2':'audio_task1_pausa','fin':'audio_task1_fin'}
+archivosAudio={'practica1':'audio_task1_1','inicio_1':'audio_task1_1','inicio_2':'audio_task1_2','pausa1':'audio_task1_pausa','pausa2':'audio_task1_pausa','fin':'audio_task1_fin'}
 audios = dict()
 for clave in archivosAudio.keys():
     audios[clave] = sound.Sound(path_audios+archivosAudio[clave]+extensionAudio)
@@ -330,7 +332,7 @@ trialClock = core.Clock()
 ensayo=0
 if expInfo['condicion']=='practica':
     presentarInstruccion('practica1')
-    presentarInstruccion('practica2')
+
 else:
     presentarInstruccion('inicio_1')
     presentarInstruccion('inicio_2')
