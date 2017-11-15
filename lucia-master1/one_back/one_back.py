@@ -81,14 +81,15 @@ def presentarEstimulo(words,recuadro,mywin,tipoItem,trigCode):
     # digale NO a los ifs, si hay diccionarios, mejor!
     words.setFont(fuentes[tipoItem]) # elige fuente según el tipo de estímulo
     words.setHeight(tamanios[tipoItem])
+    #levanta Trigger
     trig.Out32(0x378,trigCode)
-    
-    clock=core.Clock()
-    
-    while clock.getTime()<1.0:
-        words.draw()
-        recuadro.draw()
-        mywin.flip()
+    duracionEstimulo=1
+    words.draw()
+    recuadro.draw()
+    core.wait(duracionEstimulo)
+    recuadro.draw()
+    mywin.flip()
+    #termina Trigger
     trig.Out32(0x378,0) # -  DESCOMENTAR EL USO DE TRIGGERS!
     
 
@@ -96,10 +97,11 @@ def presentarEstimulo(words,recuadro,mywin,tipoItem,trigCode):
     ISI= ny.random.uniform(1.0,1.3) #SERIA ENTREE 1000 ms a 1330 ms aprx
     print "isis"
     print ISI
-    clock2=core.Clock()
-    while clock2.getTime()< ISI:
-        recuadro.draw()
-        mywin.flip()
+    recuadro.draw()
+    mywin.flip()
+    core.wait(ISI)
+    recuadro.draw()
+    mywin.flip()
 
 def getResp(esTarget,contesta):
     
@@ -138,25 +140,12 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo):
         print ensayo
         
         
-        ##código de trigger (
+        #código de trigger (no son numeros, son strings, por eso el + es una concatenación)
         codigo = item[nColStimType] + item[nColTarget]
         trigCode = int(codigo)
         print "trig"
         print trigCode
-#    trigCode=0
-    #    if item[3]=='1.1': trigCode=10 #palabra
-    #    elif item[3]=='1.2': trigCode=11 #palabra target
-    #    elif item[3]=='1.3': trigCode=20 #pseudopalabra
-    #    elif item[3]=='1.4': trigCode=21 #pseudopalabra target
-    #    elif item[3]=='2.1': trigCode=30 #false font
-    #    elif item[3]=='2.2': trigCode=31 #false font target
-    # nColTarget=3   # 0 1
-    #nColStimType=5   ·# 1 2 3 
-    #
-    #    print 'trigCode'
-    #    print trigCode
-        
-        
+
         #preparo estímulo
         estimulo = item[nColItem]
         print estimulo
@@ -172,13 +161,8 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo):
             b=b[0]
             print b
              
-    #		if co=2:          
-    #		    trig.Out32(0x378,trigCode)    
-    #		    event.clearEvents()
-    #		if c=2:
-    # 		trig.Out32(0x378,0) 
-        #transformo item[2] en un número
         print "B... "+ str(b)
+        #transformo item[nColTarget] en un número para enviarlo a la funcion getResp
         resp,tResp = getResp(int(item[nColTarget]),b) # ojo que item[2]  està como string, lo convierto a entero para que el if quede más lindo
         
        

@@ -68,46 +68,39 @@ def getTrialList(itemImagen,itemNoImagen,nBloques):
 
 
 def presentarEstimulo(words,mywin,trigCode):
+    #levanta Trigger
     trig.Out32(0x378,trigCode) # -  DESCOMENTAR EL USO DE TRIGGERS! 
-    clock=core.Clock()
-    while clock.getTime()<1.0:
-     #tiempo de presentacion de cada palabra, a 60 Hz es 300 ms. Cada frame dura 0.01666 seg, si presento cada palabra por60 frames, cada palabra se presenta durante 1000 ms aprox
-        words.draw()
-        recuadro.draw()
-        mywin.flip()
+    #tiempo de presentacion de cada palabra, a 60 Hz es 300 ms. Cada frame dura 0.01666 seg, si presento cada palabra por60 frames, cada palabra se presenta durante 1000 ms aprox
+    #le caminamos porque no funcan los Frames...
+    duracionEstimulo=1
+    words.draw()
+    recuadro.draw()
+    mywin.flip()
+    core.wait(duracionEstimulo)
+    #termina el Trigger
     trig.Out32(0x378,0) # -  DESCOMENTAR EL USO DE TRIGGERS!   
     
-    clock=core.Clock()
     ISI= ny.random.uniform(1.0,1.3) #SERIA ENTREE 1000 ms a 1330 ms aprx
     print "isis"
     print ISI
-    clock2=core.Clock()
-    while clock2.getTime()< ISI:
-        recuadro.draw()
-        mywin.flip()
+    recuadro.draw()
+    mywin.flip()
+    core.wait(ISI)
 
 
 def presentarImagen(estimuloImagen,mwin):
-        #        GENERAR ISI
-    #ISI= ny.random.randint(20,30)
-#    for nFrames in range(ISI): #tendria que se random entre 1250 y 1500 x ej
-#        mywin.flip()
-
-    #mywin.flip()
-    
-    clock=core.Clock()
-    while clock.getTime()<1.5:
-        estimuloImagen.draw()
-        mywin.flip()
+    duracionEstimulo=1.5
+    estimuloImagen.draw()
+    mywin.flip()
+    core.wait(duracionEstimulo)
     #        GENERAR ISI
-    
     ISI= ny.random.uniform(1.0,1.3) #SERIA ENTREE 1000 ms a 1330 ms aprx
     print "isis"
     print ISI
-    clock2=core.Clock()
-    while clock2.getTime()< ISI:
-        recuadro.draw()
-        mywin.flip()
+    #borro la imagen
+    recuadro.draw()
+    mywin.flip()
+    core.wait(ISI)
 
 def getResp(esTarget,contesta):
     teclaSi="l"
