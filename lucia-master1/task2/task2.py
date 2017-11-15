@@ -140,7 +140,6 @@ def getResp(esTarget,contesta):
 def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo,estimuloImagen):
     extension=".png"
     for item in block:
-        print "ESTE ES EL ITEM COMPLETO"
         print item
         ensayo=ensayo+1
         # ESTE ES EL NUMERO DE ENSAYO

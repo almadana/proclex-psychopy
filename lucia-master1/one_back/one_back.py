@@ -93,7 +93,6 @@ def presentarEstimulo(words,recuadro,mywin,tipoItem,trigCode):
 
     #        GENERAR ISI
     ISI= ny.random.randint(60,80) #SERIA ENTREE 1000 ms a 1330 ms aprx
-    print ISI
     for nFrames in range(ISI): #tendria que se random entre 1250 y 1500 x ej
         recuadro.draw()
         mywin.flip()
@@ -131,15 +130,14 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo):
         
         print item
         ensayo=ensayo+1
+        print "ensayo"
         print ensayo
         
         
         ##código de trigger (
         codigo = item[nColStimType] + item[nColTarget]
         trigCode = int(codigo)
-        print "codigoo"
-        print codigo
-        print "*********"
+        print "trig"
         print trigCode
 #    trigCode=0
     #    if item[3]=='1.1': trigCode=10 #palabra
@@ -166,10 +164,8 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo):
         presentarEstimulo(estimuloTexto,recuadro,mywin,item[nColStimType],trigCode)
         # LEVANTAR KEYPRESSES
         b=event.getKeys(keyList=['space'] , timeStamped=trialClock) #buscar opcion xa q se quede con el primer tr
-        print 'va b'
         if b: 
             b=b[0]
-            print 'nuevo b'
             print b
              
     #		if co=2:          
@@ -179,8 +175,6 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo):
     # 		trig.Out32(0x378,0) 
         #transformo item[2] en un número
         print "B... "+ str(b)
-        print "item 2 " +  item[nColItem]
-        
         resp,tResp = getResp(int(item[nColTarget]),b) # ojo que item[2]  està como string, lo convierto a entero para que el if quede más lindo
         
        
