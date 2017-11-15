@@ -65,14 +65,13 @@ def getTrialList(itemImagen,itemNoImagen,nBloques):
 
     return(bloques)
 
-def sendTrigger(trigCode):
-    #trig.Out32(0x378,trigCode) # -  DESCOMENTAR EL USO DE TRIGGERS! 
-    return() 
 
 
 def presentarEstimulo(words,mywin,trigCode):
-    sendTrigger(trigCode)
-    for nFrames in range(60): #tiempo de presentacion de cada palabra, a 60 Hz es 300 ms. Cada frame dura 0.01666 seg, si presento cada palabra por60 frames, cada palabra se presenta durante 1000 ms aprox
+    #trig.Out32(0x378,trigCode) # -  DESCOMENTAR EL USO DE TRIGGERS! 
+    clock=core.Clock()
+    while clock.getTime()<1.0:
+     #tiempo de presentacion de cada palabra, a 60 Hz es 300 ms. Cada frame dura 0.01666 seg, si presento cada palabra por60 frames, cada palabra se presenta durante 1000 ms aprox
         words.draw()
         recuadro.draw()
         mywin.flip()
@@ -82,17 +81,23 @@ def presentarEstimulo(words,mywin,trigCode):
 
 def presentarImagen(estimuloImagen,mwin):
         #        GENERAR ISI
-    ISI= ny.random.randint(20,30)
+    #ISI= ny.random.randint(20,30)
 #    for nFrames in range(ISI): #tendria que se random entre 1250 y 1500 x ej
 #        mywin.flip()
 
-    mywin.flip()
-    for nFrames in range(90): #(60):
+    #mywin.flip()
+    
+    clock=core.Clock()
+    while clock.getTime()<1.5:
         estimuloImagen.draw()
         mywin.flip()
     #        GENERAR ISI
-    ISI= ny.random.randint(60,80)
-    for nFrames in range(ISI): #tendria que se random entre 1250 y 1500 x ej
+    
+    ISI= ny.random.uniform(1.0,1.3) #SERIA ENTREE 1000 ms a 1330 ms aprx
+    print "isis"
+    print ISI
+    clock2=core.Clock()
+    while clock2.getTime()< ISI:
         mywin.flip()
 
 def getResp(esTarget,contesta):
