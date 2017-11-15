@@ -76,24 +76,28 @@ def getTrialList(itemList,nReps):
         block2.insert(flankers+posicion,nuevoTrial)
     return([block1,block2])
 
-def sendTrigger(trigCode):
-    #trig.Out32(0x378,trigCode)
-    #trig.Out32(0x378,0) # -  DESCOMENTAR EL USO DE TRIGGERS!
-    return()
 
 def presentarEstimulo(words,recuadro,mywin,tipoItem,trigCode):
     # digale NO a los ifs, si hay diccionarios, mejor!
     words.setFont(fuentes[tipoItem]) # elige fuente según el tipo de estímulo
     words.setHeight(tamanios[tipoItem])
-    sendTrigger(trigCode)
-    for nFrames in range(60): #Cada frame dura 0.01666 seg, si presento cada palabra por60 frames, cada palabra se presenta durante 1000 ms aprox
+    #trig.Out32(0x378,trigCode)
+    
+    clock=core.Clock()
+    
+    while clock.getTime()<1.0:
         words.draw()
         recuadro.draw()
         mywin.flip()
+    #trig.Out32(0x378,0) # -  DESCOMENTAR EL USO DE TRIGGERS!
+    
 
     #        GENERAR ISI
-    ISI= ny.random.randint(60,80) #SERIA ENTREE 1000 ms a 1330 ms aprx
-    for nFrames in range(ISI): #tendria que se random entre 1250 y 1500 x ej
+    ISI= ny.random.uniform(1.0,1.3) #SERIA ENTREE 1000 ms a 1330 ms aprx
+    print "isis"
+    print ISI
+    clock2=core.Clock()
+    while clock2.getTime()< ISI:
         recuadro.draw()
         mywin.flip()
 
