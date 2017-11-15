@@ -10,10 +10,10 @@ from psychopy import visual, core, event, gui, data, sound
 import numpy as ny
 import os
 
-#from ctypes import windll
+from ctypes import windll
 
 #Puerto paralelo para trigger
-#trig= windll.inpout32
+trig= windll.inpout32
 
 
 #            FUNCIÓN PARA CREAR LISTAS CON REPETICIONES ALEATORIAS         
@@ -81,7 +81,7 @@ def presentarEstimulo(words,recuadro,mywin,tipoItem,trigCode):
     # digale NO a los ifs, si hay diccionarios, mejor!
     words.setFont(fuentes[tipoItem]) # elige fuente según el tipo de estímulo
     words.setHeight(tamanios[tipoItem])
-    #trig.Out32(0x378,trigCode)
+    trig.Out32(0x378,trigCode)
     
     clock=core.Clock()
     
@@ -89,7 +89,7 @@ def presentarEstimulo(words,recuadro,mywin,tipoItem,trigCode):
         words.draw()
         recuadro.draw()
         mywin.flip()
-    #trig.Out32(0x378,0) # -  DESCOMENTAR EL USO DE TRIGGERS!
+    trig.Out32(0x378,0) # -  DESCOMENTAR EL USO DE TRIGGERS!
     
 
     #        GENERAR ISI
@@ -202,7 +202,7 @@ dial = gui.DlgFromDict(expInfo,title='one_back',fixed=['fecha','LF'])
 #           VENTANA
 x=1024; y=768#defino tamano del monitor  
 
-mywin = visual.Window(fullscr=False,size=[x,y],allowGUI=True, monitor="testMonitor", units="deg",color=[-0.2,-0.2,-0.2], screen=0)
+mywin = visual.Window(fullscr=True, size=[x,y],allowGUI=True, monitor="testMonitor", units="deg",color=[-0.2,-0.2,-0.2], screen=1)
 mywin.setMouseVisible(False)
 
 #trig.Out32(0x378,0)    
@@ -333,7 +333,8 @@ for nBloque,bloque in enumerate(bloques):
     if nBloque >0:
         presentarInstruccion('pausa')
     loopEstimulo(mywin,bloque,trialClock,fixation,estimuloTexto,salida,ensayo)
-presentarInstruccion('fin')
+if not expInfo['cond']=='practica':
+    presentarInstruccion('fin')
 
 
 

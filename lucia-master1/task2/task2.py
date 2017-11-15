@@ -10,10 +10,10 @@ from psychopy import visual, core, event, gui, data, sound
 import numpy as ny
 import os
 
-#from ctypes import windll
+from ctypes import windll
 
 #Puerto paralelo para gger
-#trig= windll.inpout32
+trig= windll.inpout32
 
 
 #            FUNCIÓN PARA CREAR 4 bloques         
@@ -68,15 +68,23 @@ def getTrialList(itemImagen,itemNoImagen,nBloques):
 
 
 def presentarEstimulo(words,mywin,trigCode):
-    #trig.Out32(0x378,trigCode) # -  DESCOMENTAR EL USO DE TRIGGERS! 
+    trig.Out32(0x378,trigCode) # -  DESCOMENTAR EL USO DE TRIGGERS! 
     clock=core.Clock()
     while clock.getTime()<1.0:
      #tiempo de presentacion de cada palabra, a 60 Hz es 300 ms. Cada frame dura 0.01666 seg, si presento cada palabra por60 frames, cada palabra se presenta durante 1000 ms aprox
         words.draw()
         recuadro.draw()
         mywin.flip()
-    #trig.Out32(0x378,0) # -  DESCOMENTAR EL USO DE TRIGGERS!   
+    trig.Out32(0x378,0) # -  DESCOMENTAR EL USO DE TRIGGERS!   
     
+    clock=core.Clock()
+    ISI= ny.random.uniform(1.0,1.3) #SERIA ENTREE 1000 ms a 1330 ms aprx
+    print "isis"
+    print ISI
+    clock2=core.Clock()
+    while clock2.getTime()< ISI:
+        recuadro.draw()
+        mywin.flip()
 
 
 def presentarImagen(estimuloImagen,mwin):
@@ -98,6 +106,7 @@ def presentarImagen(estimuloImagen,mwin):
     print ISI
     clock2=core.Clock()
     while clock2.getTime()< ISI:
+        recuadro.draw()
         mywin.flip()
 
 def getResp(esTarget,contesta):
@@ -155,7 +164,7 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo,est
         #ncolCongruencia #ncolImagen #ncolStimType
         trigCode=item[ncolStimType]
         if trigCode==1:
-            trigCode = trigCode + item[ncolImagen] + item[ncolCongruencia]
+            trigCode = trigCode + item[ncolImagen] + item[ncolCongruencia]       
         trigCode=int(trigCode)
     #    trigCode=0
     #    if item[3]=='1.1': trigCode=10 #palabra
@@ -224,7 +233,7 @@ dial = gui.DlgFromDict(expInfo,title='N1_semantic',fixed=['fecha','LF'])
 #           VENTANA
 x=1024; y=768#defino tamano del monitor  
 
-mywin = visual.Window(fullscr=False,size=[x,y],allowGUI=True, monitor="testMonitor", units="deg",color=[-0.2,-0.2,-0.2], screen=0)
+mywin = visual.Window(fullscr=True,size=[x,y],allowGUI=True, monitor="testMonitor", units="deg",color=[-0.2,-0.2,-0.2], screen=1)
 mywin.setMouseVisible(False)
 
 #trig.Out32(0x378,0)    
@@ -244,7 +253,7 @@ archivosImagen={'practica1':'intro_practica_task2','inicio_1':'intro_expe_task2_
 imagenInstrucciones = visual.ImageStim(win=mywin,pos=(0,0))
 extensionAudio='.wav'
 path_audios='./'
-archivosAudio={'practica1':'IntroPracticaTask2','inicio_1':'IntroPracticaTask2','inicio_2':'IntroExpe2Task2','pausa1':'PausaIntermediaTask2','pausa2':'FinBloque1task2','fin':'FinBloque1task2'}
+archivosAudio={'practica1':'IntroPracticaTask2','inicio_1':'IntroPracticaTask2','inicio_2':'IntroExpe2Task2','pausa1':'PausaIntermediaTask2','pausa2':'FinBloque1task2','fin':'audio_task 2_fin'}
 audios = dict()
 for clave in archivosAudio.keys():
     audios[clave] = sound.Sound(path_audios+archivosAudio[clave]+extensionAudio)
@@ -348,7 +357,8 @@ for nBloque,bloque in enumerate(bloques):
         else:
             presentarInstruccion('pausa1')
     loopEstimulo(mywin,bloque,trialClock,fixation,estimuloTexto,salida,ensayo,estimuloImagen)
-presentarInstruccion('fin')
+if not expInfo['condicion']=='practica':
+    presentarInstruccion('fin')
 
 
 mywin.close()
