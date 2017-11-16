@@ -76,7 +76,7 @@ def presentarEstimulo(words,mywin,trigCode):
     words.draw()
     recuadro.draw()
     mywin.flip()
-    core.wait(duracionEstimulo)
+    core.wait(duracionEstimulo,duracionEstimulo)
     #termina el Trigger
     trig.Out32(0x378,0) # -  DESCOMENTAR EL USO DE TRIGGERS!   
     
@@ -85,14 +85,14 @@ def presentarEstimulo(words,mywin,trigCode):
     print ISI
     recuadro.draw()
     mywin.flip()
-    core.wait(ISI)
+    core.wait(ISI,ISI)
 
 
 def presentarImagen(estimuloImagen,mwin):
     duracionEstimulo=1.5
     estimuloImagen.draw()
     mywin.flip()
-    core.wait(duracionEstimulo)
+    core.wait(duracionEstimulo,duracionEstimulo)
     #        GENERAR ISI
     ISI= ny.random.uniform(1.0,1.3) #SERIA ENTREE 1000 ms a 1330 ms aprx
     print "isis"
@@ -100,7 +100,7 @@ def presentarImagen(estimuloImagen,mwin):
     #borro la imagen
     recuadro.draw()
     mywin.flip()
-    core.wait(ISI)
+    core.wait(ISI,ISI)
 
 def getResp(esTarget,contesta):
     teclaSi="l"
@@ -226,7 +226,7 @@ dial = gui.DlgFromDict(expInfo,title='N1_semantic',fixed=['fecha','LF'])
 #           VENTANA
 x=1024; y=768#defino tamano del monitor  
 
-mywin = visual.Window(fullscr=True,size=[x,y],allowGUI=True, monitor="testMonitor", units="deg",color=[-0.2,-0.2,-0.2], screen=1)
+mywin = visual.Window(fullscr=False,size=[x,y],allowGUI=True, monitor="testMonitor", units="deg",color=[-0.2,-0.2,-0.2], screen=1)
 mywin.setMouseVisible(False)
 
 #trig.Out32(0x378,0)    
@@ -334,6 +334,7 @@ pausaTexto2.setText("Seguimos..!!!... Presiona cualquier tecla para continuar")
 
 globalClock = core.Clock()
 trialClock = core.Clock()
+stimClock = core.Clock()
 
 ensayo=0
 if expInfo['condicion']=='practica':

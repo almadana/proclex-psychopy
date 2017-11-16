@@ -83,12 +83,11 @@ def presentarEstimulo(words,recuadro,mywin,tipoItem,trigCode):
     words.setHeight(tamanios[tipoItem])
     #levanta Trigger
     trig.Out32(0x378,trigCode)
-    duracionEstimulo=1
+    duracionEstimulo=1.0
+    recuadro.draw()
     words.draw()
-    recuadro.draw()
-    core.wait(duracionEstimulo)
-    recuadro.draw()
     mywin.flip()
+    core.wait(duracionEstimulo,duracionEstimulo)
     #termina Trigger
     trig.Out32(0x378,0) # -  DESCOMENTAR EL USO DE TRIGGERS!
     
@@ -99,7 +98,7 @@ def presentarEstimulo(words,recuadro,mywin,tipoItem,trigCode):
     print ISI
     recuadro.draw()
     mywin.flip()
-    core.wait(ISI)
+    core.wait(ISI,ISI)
     recuadro.draw()
     mywin.flip()
 
@@ -174,7 +173,7 @@ def presentarInstruccion(clave):
     mywin.flip()
     imagenInstrucciones.draw()
     mywin.flip()
-    core.wait(5) # pausa obligatoria
+    core.wait(5,0) # pausa obligatoria
     event.waitKeys()
 # ----------------- PRESETS --------------
 
@@ -186,7 +185,7 @@ dial = gui.DlgFromDict(expInfo,title='one_back',fixed=['fecha','LF'])
 #           VENTANA
 x=1024; y=768#defino tamano del monitor  
 
-mywin = visual.Window(fullscr=True, size=[x,y],allowGUI=True, monitor="testMonitor", units="deg",color=[-0.2,-0.2,-0.2], screen=1)
+mywin = visual.Window(fullscr=False, size=[x,y],allowGUI=True, monitor="testMonitor", units="deg",color=[-0.2,-0.2,-0.2], screen=1)
 mywin.setMouseVisible(False)
 
 #trig.Out32(0x378,0)    
