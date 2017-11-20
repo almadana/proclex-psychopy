@@ -34,7 +34,8 @@ def getTrialList(itemList,nReps):
         return(None)
     #for nItem,item,cond_target,bloque,e,f,g,h,i,j in itemList:
     #creo lista permutada
-    trialList=list(  ny.random.permutation(itemList)   )
+    #trialList=list(  ny.random.permutation(itemList)   )
+    random.shuffle(trialList)
     # partir a la mitad itemList
     #cuanto es la mitad?
     mitaditemList=int(round(len(itemList)/2.0)) #la mitad    
@@ -61,19 +62,16 @@ def getTrialList(itemList,nReps):
     posAInsertar1=itemsARepetir1a + 1
     posAInsertar2=itemsARepetir2a + 1
     
-    
     for indice,posicion in enumerate(posAInsertar1):
-        nuevoTrial = tuple(block1[itemsARepetir1a[indice]+flankers])
-        nItem,base,item,cond_target,bloque,e = nuevoTrial
-        nuevoTrial = (nItem,base,item,'1',bloque,e)
+        nuevoTrial = ny.array(block1[itemsARepetir1a[indice]])
+        nuevoTrial[3] = '1'
         # en la posicion posAInsertar, inserto el item numero itemsARepetir[indice] de la lista
-        block1.insert(flankers+posicion,nuevoTrial)
+        block1.insert(posicion,nuevoTrial)
     for indice,posicion in enumerate(posAInsertar2):
     # en la posicion posAInsertar, inserto el item numero itemsARepetir[indice] de la lista
-        nuevoTrial = tuple(block2[itemsARepetir2a[indice]+flankers])
-        nItem,base,item,cond_target,bloque,e  = nuevoTrial
-        nuevoTrial = (nItem,base,item,'1',bloque,e)
-        block2.insert(flankers+posicion,nuevoTrial)
+        nuevoTrial = ny.array(block2[itemsARepetir2a[indice]])
+        nuevoTrial[3] = '1'
+        block2.insert(posicion,nuevoTrial)
     return([block1,block2])
 
 
