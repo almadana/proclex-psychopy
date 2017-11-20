@@ -9,8 +9,9 @@ from __future__  import division
 from psychopy import visual, core, event, gui, data, sound
 import numpy as ny
 import os
-
+import random
 from ctypes import windll
+
 
 #Puerto paralelo para trigger
 trig= windll.inpout32
@@ -35,6 +36,7 @@ def getTrialList(itemList,nReps):
     #for nItem,item,cond_target,bloque,e,f,g,h,i,j in itemList:
     #creo lista permutada
     #trialList=list(  ny.random.permutation(itemList)   )
+    trialList=itemList[:]
     random.shuffle(trialList)
     # partir a la mitad itemList
     #cuanto es la mitad?
