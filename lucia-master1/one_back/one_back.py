@@ -143,6 +143,9 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo):
         print "trig"
         print trigCode
 
+        if expInfo['cond']=="practica":
+            trigCode=0
+
         #preparo estímulo
         estimulo = item[nColItem]
         print estimulo

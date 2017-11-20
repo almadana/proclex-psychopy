@@ -88,8 +88,9 @@ def presentarEstimulo(words,mywin,trigCode):
     core.wait(ISI,ISI)
 
 
-def presentarImagen(estimuloImagen,mwin):
+def presentarImagen(estimuloImagen,mwin,trigCodeImagen):
     duracionEstimulo=1.5
+    trig.Out32(0x378,trigCodeImagen) # -  DESCOMENTAR EL USO DE TRIGGERS! 
     estimuloImagen.draw()
     mywin.flip()
     core.wait(duracionEstimulo,duracionEstimulo)
@@ -100,6 +101,7 @@ def presentarImagen(estimuloImagen,mwin):
     #borro la imagen
     recuadro.draw()
     mywin.flip()
+    trig.Out32(0x378,0) # -  DESCOMENTAR EL USO DE TRIGGERS! 
     core.wait(ISI,ISI)
 
 def getResp(esTarget,contesta):
@@ -159,6 +161,13 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo,est
         if trigCode==1:
             trigCode = trigCode + item[ncolImagen] + item[ncolCongruencia]       
         trigCode=int(trigCode)
+        trigCodeImagen=int(4+item[ncolCongruencia])
+        
+        # codigo chancho
+        if expInfo['condicion']=="practica":
+            trigCode=0
+            trigCodeImagen=0
+        
     #    trigCode=0
     #    if item[3]=='1.1': trigCode=10 #palabra
     #    elif item[3]=='1.2': trigCode=11 #palabra target
@@ -192,7 +201,7 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo,est
             estimuloImagen.setImage(pathImagen+item[ncolArchivoImagen]+extension)
             trialClock.reset()
             event.clearEvents()
-            presentarImagen(estimuloImagen,mywin)
+            presentarImagen(estimuloImagen,mywin,trigCodeImagen)
             b=event.getKeys(keyList=['s','l'] , timeStamped=trialClock) #buscar opcion xa q se quede con el primer tr
             print 'va b'
             resp,tResp = getResp(int(item[ncolCongruencia]),b) # ojo que item[2]  està como string, lo convierto a entero para que el if quede más lindo
