@@ -161,7 +161,7 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo,est
         if trigCode==1:
             trigCode = trigCode + item[ncolImagen] + item[ncolCongruencia]       
         trigCode=int(trigCode)
-        trigCodeImagen=int(4+item[ncolCongruencia])
+        
         
         # codigo chancho
         if expInfo['condicion']=="practica":
@@ -201,9 +201,9 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo,est
             estimuloImagen.setImage(pathImagen+item[ncolArchivoImagen]+extension)
             trialClock.reset()
             event.clearEvents()
+            trigCodeImagen=int("4"+item[ncolCongruencia])
             presentarImagen(estimuloImagen,mywin,trigCodeImagen)
             b=event.getKeys(keyList=['s','l'] , timeStamped=trialClock) #buscar opcion xa q se quede con el primer tr
-            print 'va b'
             resp,tResp = getResp(int(item[ncolCongruencia]),b) # ojo que item[2]  està como string, lo convierto a entero para que el if quede más lindo
         else:
             resp="NA"

@@ -1,0 +1,37 @@
+num_item,base,item,cond_target,bloque,cond_bloque,acierto,TR
+81,JUGO,JUGO,0,palabra,1,1,NA
+82,PIE,PIE,0,palabra,1,1,NA
+82,PIE,PIE,1,palabra,1,1,0.823074490683
+83,PERRO,PERRO,0,palabra,1,1,NA
+84,QUESO,QUESO,0,palabra,1,1,NA
+87,MIEL,MIEL,0,palabra,1,1,NA
+87,MIEL,MIEL,1,palabra,1,1,0.645665653316
+88,BICI,BICI,0,palabra,1,1,NA
+88,BICI,BICI,1,palabra,1,1,0.764415259076
+89,FARO,FARO,0,palabra,1,1,NA
+89,FARO,FARO,1,palabra,1,1,0.601042595947
+90,FLOR,FLOR,0,palabra,1,1,NA
+81,JUGO,RUMO,0,pseudopalabr,2,0,0.373786252676
+82,PIE,TIE,0,pseudopalabr,2,0,0.797475307262
+82,PIE,TIE,1,pseudopalabr,2,1,0.8818353031
+83,PERRO,NERRA,0,pseudopalabr,2,1,NA
+83,PERRO,NERRA,1,pseudopalabr,2,1,1.30537976887
+84,QUESO,QUEGA,0,pseudopalabr,2,1,NA
+87,MIEL,DIEL,0,pseudopalabr,2,1,NA
+87,MIEL,DIEL,1,pseudopalabr,2,0,NA
+88,BICI,RIDI,0,pseudopalabr,2,1,NA
+88,BICI,RIDI,1,pseudopalabr,2,1,0.899442370503
+89,FARO,GORA,0,pseudopalabr,2,1,NA
+90,FLOR,CLAB,0,pseudopalabr,2,1,NA
+81,JUGO,JUGO,0,false font,3,1,NA
+82,PIE,PIE,0,false font,3,1,NA
+82,PIE,PIE,1,false font,3,1,1.20986800229
+83,PERRO,PERRO,0,false font,3,1,NA
+84,QUESO,QUESO,0,false font,3,1,NA
+87,MIEL,MIEL,0,false font,3,1,NA
+87,MIEL,MIEL,1,false font,3,1,0.68047469368
+88,BICI,BICI,0,false font,3,1,NA
+88,BICI,BICI,1,false font,3,1,0.669681322976
+89,FARO,FARO,0,false font,3,0,0.816425862802
+89,FARO,FARO,1,false font,3,1,0.501368883341
+90,FLOR,FLOR,0,false font,3,1,NA
