@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-#EXPERIMENTO ONE-BACK REPETTION (Réplica Maurer 2015)
-
-
-#"trial"=cond
+#-------------EXPERIMENTO ONE-BACK REPETTION (Réplica Maurer 2015)-------------------
+# Lucía Fernández y Álvaro Cabana
+# Grupo Lenguaje - CIBPsi - Facultad de Psicología, Universidad de la República, Montevideo Uruguay
+#-------------------------------------------
 
 from __future__  import division
 from psychopy import visual, core, event, gui, data, sound
@@ -193,12 +193,19 @@ mywin.setMouseVisible(False)
 
 #trig.Out32(0x378,0)    
 
+
+##### FRAME RATE #######
+# EN MONITOR AOC CT720g - 1024x768@85Hz 
 fps=mywin.getActualFrameRate()
+#################  85 Hz ----- 11.764 msec/frame 
+
+
+
 print "-------------\nFrame Rate: "+str(fps)+"\n------------"
 if fps!=None:
     frameDur = 1.0/round(fps)
 else:
-    frameDur = 1.0/60.0 # couldn't get a reliable measure so guess
+    frameDur = 1.0/85.0 # couldn't get a reliable measure so guess
 
 # archivos de estímulos para cada condición
 archivos = {'practica':'practica_task1.csv','palabra':'palabras.csv','pseudopalabra':'pseudopalabras.csv','falsefont':'falsefont.csv'}
