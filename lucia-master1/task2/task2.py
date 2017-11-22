@@ -103,7 +103,7 @@ def presentarImagen(estimuloImagen,mwin,trigCodeImagen):
     print "isis"
     print ISI
 
-    for nFrame in range(nFramesEstimulo)
+    for nFrame in range(nFramesEstimulo):
         trig.Out32(0x378,trigCodeImagen) # -  DESCOMENTAR EL USO DE TRIGGERS! 
         estimuloImagen.draw()
         mywin.flip()
@@ -216,6 +216,7 @@ def presentarInstruccion(clave):
     event.waitKeys()
 
 def onsetExpe():  # un poquito de pausa antes que comience el expe
+    mywin.flip()
     core.wait(1)
     recuadro.draw()
     mywin.flip()
@@ -359,13 +360,13 @@ else:
     presentarInstruccion('inicio_1')
     presentarInstruccion('inicio_2')
 #deberìan haber dos bloques, eso es lo que devuelve getTrialList()...
-onsetExpe()
 for nBloque,bloque in enumerate(bloques):
     if nBloque>0:
         if nBloque==2:
             presentarInstruccion('pausa2')
         else:
             presentarInstruccion('pausa1')
+    onsetExpe()
     loopEstimulo(mywin,bloque,trialClock,fixation,estimuloTexto,salida,ensayo,estimuloImagen)
 if not expInfo['condicion']=='practica':
     presentarInstruccion('fin')

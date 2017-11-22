@@ -183,6 +183,7 @@ def presentarInstruccion(clave):
     event.waitKeys()
 
 def onsetExpe():  # un poquito de pausa antes que comience el expe
+    mywin.flip()
     core.wait(1)
     recuadro.draw()
     mywin.flip()
@@ -338,11 +339,11 @@ else:
 
 # AQUÍ COMIENZA LA ACCIÓN
 # LOOP DE BLOQUES
-onsetExpe()
 #deberìan haber dos bloques, eso es lo que devuelve getTrialList()...
 for nBloque,bloque in enumerate(bloques):
     if nBloque >0:
         presentarInstruccion('pausa')
+    onsetExpe()
     loopEstimulo(mywin,bloque,trialClock,fixation,estimuloTexto,salida,ensayo)
 if not expInfo['cond']=='practica':
     presentarInstruccion('fin')
