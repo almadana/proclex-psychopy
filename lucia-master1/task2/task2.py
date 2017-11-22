@@ -6,7 +6,6 @@
 #-------------------------------------------
 
 
-#"trial"=cond
 
 from __future__  import division
 from psychopy import visual, core, event, gui, data, sound
@@ -141,23 +140,6 @@ def getResp(esTarget,contesta):
     print tResp
     return(resp,tResp)
 
-        
-#    if not contesta and esTarget:
-#        resp,tResp=('0','NA')    #no contesta y es target
-#        print tResp
-#        
-#    if contesta and esTarget:
-#        resp,tResp=('1',contesta[1])    #contesta y es target
-#        print resp
-#        print tResp
-#         
-#    if contesta and not esTarget:
-#        resp,tResp=('0',contesta[1])    #conesta y no es target
-#        print resp
-#        print tResp
-#    return(resp,tResp)
-
-
 
 
 def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo,estimuloImagen):
@@ -226,8 +208,7 @@ def onsetExpe():  # un poquito de pausa antes que comience el expe
 
 
 
-    
-    
+
 # ----------------- PRESETS --------------
 
 #           Info del experimento
@@ -314,7 +295,7 @@ print 'EMPIEZA EL EXPERIMENTO'
 path=os.getcwd()
 if not os.path.exists('salida N1_semantic'):
     os.makedirs('salida N1_semantic')
-nombreArch=expInfo['experimentador']+'_N1_semantic_prueba'+expInfo['sujeto']+'_'+expInfo['fecha']
+nombreArch=expInfo['experimentador']+'_N1_semantic_'+expInfo['sujeto']+'_'+expInfo['condicion']+'_'+expInfo['fecha']
 archivoOut=path+'\\salida N1_semantic\\'+nombreArch+'.csv' 
 salida = open(archivoOut,'w')
 

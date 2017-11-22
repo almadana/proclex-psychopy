@@ -282,7 +282,7 @@ else:
 path=os.getcwd()
 if not os.path.exists('salida'):
     os.makedirs('salida')
-nombreArch=expInfo['experimentador']+'_one_back_prueba_'+expInfo['sujeto']+'_'+expInfo['fecha']
+nombreArch=expInfo['experimentador']+'_one_back_'+expInfo['sujeto']+'_'+expInfo['cond']+'_'+expInfo['fecha']
 archivoOut=path+'\\salida\\'+nombreArch+'.csv'
 salida = open(archivoOut,'w')
 
