@@ -2,7 +2,7 @@
 
 #-------------EXPERIMENTO ONE-BACK REPETTION (Réplica Maurer 2015)-------------------
 # Lucía Fernández y Álvaro Cabana
-# Grupo Lenguaje - CIBPsi - Facultad de Psicología, Universidad de la República, Montevideo Uruguay
+# Grupo Lenguaje - CIBPsi - Facultad de Psicología, Universidad de la República, Montevideo Uruguay - Oct/Nov 2017
 #-------------------------------------------
 
 from __future__  import division
@@ -82,12 +82,15 @@ def presentarEstimulo(words,recuadro,mywin,tipoItem,trigCode):
     words.setFont(fuentes[tipoItem]) # elige fuente según el tipo de estímulo
     words.setHeight(tamanios[tipoItem])
     #levanta Trigger
-    trig.Out32(0x378,trigCode)
+    # atencion; duración del estímulo
     duracionEstimulo=1.0
-    recuadro.draw()
-    words.draw()
-    mywin.flip()
-    core.wait(duracionEstimulo,duracionEstimulo)
+    nFramesEstimulo = 85 # 1 segundo a 85 Hz
+    for nFrame in range(nFramesEstimulo):
+        trig.Out32(0x378,trigCode) # prendo trigger en el primer frame 
+        recuadro.draw()
+        words.draw()
+        mywin.flip()
+    #core.wait(duracionEstimulo,duracionEstimulo)
     #termina Trigger
     trig.Out32(0x378,0) # -  DESCOMENTAR EL USO DE TRIGGERS!
     
@@ -178,6 +181,17 @@ def presentarInstruccion(clave):
     mywin.flip()
     core.wait(5,0) # pausa obligatoria
     event.waitKeys()
+
+def onsetExpe():  # un poquito de pausa antes que comience el expe
+    core.wait(1)
+    recuadro.draw()
+    mywin.flip()
+    core.wait(3)
+
+
+
+
+
 # ----------------- PRESETS --------------
 
 #           Info del experimento
@@ -321,6 +335,10 @@ if expInfo['cond']=='practica':
 else:
     presentarInstruccion('inicio_1')
     presentarInstruccion('inicio_2')
+
+# AQUÍ COMIENZA LA ACCIÓN
+# LOOP DE BLOQUES
+onsetExpe()
 #deberìan haber dos bloques, eso es lo que devuelve getTrialList()...
 for nBloque,bloque in enumerate(bloques):
     if nBloque >0:

@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
 #EXPERIMENTO N1 SEMANTIC
+# Lucía Fernández y Álvaro Cabana
+# Grupo Lenguaje - CIBPsi - Facultad de Psicología, Universidad de la República, Montevideo Uruguay - Oct/Nov 2017
+#-------------------------------------------
 
 
 #"trial"=cond
@@ -71,18 +74,22 @@ def presentarEstimulo(words,mywin,trigCode):
     #levanta Trigger
     trig.Out32(0x378,trigCode) # -  DESCOMENTAR EL USO DE TRIGGERS! 
     ISI= ny.random.uniform(1.0,1.3) #SERIA ENTREE 1000 ms a 1330 ms aprx
-#tiempo de presentacion de cada palabra, a 60 Hz es 300 ms. Cada frame dura 0.01666 seg, si presento cada palabra por60 frames, cada palabra se presenta durante 1000 ms aprox
-    #le caminamos porque no funcan los Frames...
-    duracionEstimulo=1
-    words.draw()
-    recuadro.draw()
-    mywin.flip()
-    core.wait(duracionEstimulo,duracionEstimulo)
-    #termina el Trigger
-    trig.Out32(0x378,0) # -  DESCOMENTAR EL USO DE TRIGGERS!   
-    
     print "isis"
     print ISI
+
+    #sinFrames
+    duracionEstimulo=1
+    #conFrames
+    nFramesEstimulo = 85  # tasa de refresco de 85Hz!
+    for nFrame in range(nFramesEstimulo):
+        trig.Out32(0x378,trigCode) # -  DESCOMENTAR EL USO DE TRIGGERS! 
+        words.draw()
+        recuadro.draw()
+        mywin.flip()
+    #core.wait(duracionEstimulo,duracionEstimulo)
+    #termina el Trigger
+    trig.Out32(0x378,0) # -  DESCOMENTAR EL USO DE TRIGGERS!   
+    #borro imagen
     recuadro.draw()
     mywin.flip()
     core.wait(ISI,ISI)
@@ -90,16 +97,20 @@ def presentarEstimulo(words,mywin,trigCode):
 
 def presentarImagen(estimuloImagen,mwin,trigCodeImagen):
     duracionEstimulo=1.5
+    nFramesEstimulo = 128 # 1.506 ms @ 85 Hz
     #        GENERAR ISI
     ISI= ny.random.uniform(1.0,1.3) #SERIA ENTREE 1000 ms a 1330 ms aprx
-    trig.Out32(0x378,trigCodeImagen) # -  DESCOMENTAR EL USO DE TRIGGERS! 
-    estimuloImagen.draw()
-    mywin.flip()
-    core.wait(duracionEstimulo,duracionEstimulo)
     print "isis"
     print ISI
+
+    for nFrame in range(nFramesEstimulo)
+        trig.Out32(0x378,trigCodeImagen) # -  DESCOMENTAR EL USO DE TRIGGERS! 
+        estimuloImagen.draw()
+        mywin.flip()
+    #core.wait(duracionEstimulo,duracionEstimulo)
+    
     #borro la imagen
-    recuadro.draw()
+    recuadro.draw() #vuelvo a dibujar el recuadro
     mywin.flip()
     trig.Out32(0x378,0) # -  DESCOMENTAR EL USO DE TRIGGERS! 
     core.wait(ISI,ISI)
@@ -157,7 +168,6 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo,est
         # ESTE ES EL NUMERO DE ENSAYO
         print ensayo
         
-        # function sendTrigger()
         ##código de trigger (
         #ncolCongruencia #ncolImagen #ncolStimType
         trigCode=item[ncolStimType]
@@ -170,24 +180,6 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo,est
         if expInfo['condicion']=="practica":
             trigCode=0
             trigCodeImagen=0
-        
-    #    trigCode=0
-    #    if item[3]=='1.1': trigCode=10 #palabra
-    #    elif item[3]=='1.2': trigCode=11 #palabra target
-    #    elif item[3]=='1.3': trigCode=20 #pseudopalabra
-    #    elif item[3]=='1.4': trigCode=21 #pseudopalabra target
-    #    elif item[3]=='2.1': trigCode=30 #false font
-    #    elif item[3]=='2.2': trigCode=31 #false font target
-
-    #
-    #    print 'trigCode'
-    #    print trigCode
-        
-        
-        #cruz de fijaciòn, 1 segundo
-#        fixation.draw()
-#        mywin.flip()
-#        core.wait(1)
         
         #preparo estímulo
         estimulo = item[ncolItem]
@@ -222,6 +214,19 @@ def presentarInstruccion(clave):
     mywin.flip()
     core.wait(5) # pausa obligatoria
     event.waitKeys()
+
+def onsetExpe():  # un poquito de pausa antes que comience el expe
+    core.wait(1)
+    recuadro.draw()
+    mywin.flip()
+    core.wait(3)
+
+
+
+
+
+    
+    
 # ----------------- PRESETS --------------
 
 #           Info del experimento
@@ -237,12 +242,16 @@ mywin.setMouseVisible(False)
 
 #trig.Out32(0x378,0)    
 
+
+##### FRAME RATE #######
+# EN MONITOR AOC CT720g - 1024x768@85Hz 
 fps=mywin.getActualFrameRate()
+#################  85 Hz ----- 11.764 msec/frame 
 print "-------------\nFrame Rate: "+str(fps)+"\n------------"
 if fps!=None:
     frameDur = 1.0/round(fps)
 else:
-    frameDur = 1.0/60.0 # couldn't get a reliable measure so guess
+    frameDur = 1.0/85.0 # couldn't get a reliable measure so guess
 
 
 #archivos de imagen
@@ -350,6 +359,7 @@ else:
     presentarInstruccion('inicio_1')
     presentarInstruccion('inicio_2')
 #deberìan haber dos bloques, eso es lo que devuelve getTrialList()...
+onsetExpe()
 for nBloque,bloque in enumerate(bloques):
     if nBloque>0:
         if nBloque==2:
