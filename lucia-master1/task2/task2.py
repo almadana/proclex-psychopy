@@ -70,7 +70,8 @@ def getTrialList(itemImagen,itemNoImagen,nBloques):
 def presentarEstimulo(words,mywin,trigCode):
     #levanta Trigger
     trig.Out32(0x378,trigCode) # -  DESCOMENTAR EL USO DE TRIGGERS! 
-    #tiempo de presentacion de cada palabra, a 60 Hz es 300 ms. Cada frame dura 0.01666 seg, si presento cada palabra por60 frames, cada palabra se presenta durante 1000 ms aprox
+    ISI= ny.random.uniform(1.0,1.3) #SERIA ENTREE 1000 ms a 1330 ms aprx
+#tiempo de presentacion de cada palabra, a 60 Hz es 300 ms. Cada frame dura 0.01666 seg, si presento cada palabra por60 frames, cada palabra se presenta durante 1000 ms aprox
     #le caminamos porque no funcan los Frames...
     duracionEstimulo=1
     words.draw()
@@ -80,7 +81,6 @@ def presentarEstimulo(words,mywin,trigCode):
     #termina el Trigger
     trig.Out32(0x378,0) # -  DESCOMENTAR EL USO DE TRIGGERS!   
     
-    ISI= ny.random.uniform(1.0,1.3) #SERIA ENTREE 1000 ms a 1330 ms aprx
     print "isis"
     print ISI
     recuadro.draw()
@@ -90,12 +90,12 @@ def presentarEstimulo(words,mywin,trigCode):
 
 def presentarImagen(estimuloImagen,mwin,trigCodeImagen):
     duracionEstimulo=1.5
+    #        GENERAR ISI
+    ISI= ny.random.uniform(1.0,1.3) #SERIA ENTREE 1000 ms a 1330 ms aprx
     trig.Out32(0x378,trigCodeImagen) # -  DESCOMENTAR EL USO DE TRIGGERS! 
     estimuloImagen.draw()
     mywin.flip()
     core.wait(duracionEstimulo,duracionEstimulo)
-    #        GENERAR ISI
-    ISI= ny.random.uniform(1.0,1.3) #SERIA ENTREE 1000 ms a 1330 ms aprx
     print "isis"
     print ISI
     #borro la imagen
@@ -103,6 +103,9 @@ def presentarImagen(estimuloImagen,mwin,trigCodeImagen):
     mywin.flip()
     trig.Out32(0x378,0) # -  DESCOMENTAR EL USO DE TRIGGERS! 
     core.wait(ISI,ISI)
+    recuadro.draw()
+    mywin.flip()
+
 
 def getResp(esTarget,contesta):
     teclaSi="l"
@@ -210,12 +213,6 @@ def loopEstimulo(mywin,block,trialClock,fixation,estimuloTexto,salida,ensayo,est
             tResp="NA"
 #                 SALIDA                                             
         salida.write(item[0]+','+item[1]+','+item[2]+','+item[3]+','+item[4]+','+item[5]+','+item[6]+','+item[7]+','+resp+','+ str(tResp)+"\n")
-        #        GENERAR ISI
-        ISI= ny.random.randint(60,90)
-        for nFrames in range(ISI): #tendria que se random entre 1250 y 1500 x ej
-            recuadro.draw()
-            mywin.flip()
-
 
 def presentarInstruccion(clave):
     imagenInstrucciones.setImage(path_imagenes+archivosImagen[clave]+extension)
