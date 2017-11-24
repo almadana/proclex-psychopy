@@ -1,0 +1,19 @@
+num_item,item, tipoEstimulo, cod_tipoEstimulo, tipo_pal, frec, frec_ac, num_caract, estr, acierto,TR
+83,PERRO,NERRA,0,pseudopalabra,0,NA,NA,NA,NA
+89,FARO,GORA,0,pseudopalabra,0,NA,NA,NA,NA
+85,GLOBO,BLOTO,0,pseudopalabra,0,NA,NA,NA,NA
+87,MIEL,DIEL,0,pseudopalabra,0,NA,NA,NA,NA
+82,PIE,TIE,0,pseudopalabra,0,NA,NA,NA,NA
+89,FARO,FARO,1,palabra,1,0,QUESO,NA,NA
+84,QUESO,QUESO,1,palabra,1,1,QUESO,1,1.21608614053
+84,QUESO,QUEGA,0,pseudopalabra,0,NA,NA,NA,NA
+82,PIE,PIE,1,palabra,1,1,PIE,1,0.653097846077
+90,FLOR,FLOR,1,palabra,1,1,FLOR,1,0.703948462485
+87,MIEL,MIEL,1,palabra,1,0,PIE,1,1.11597661348
+83,PERRO,PERRO,1,palabra,1,1,PERRO,1,0.721364246668
+86,LAPIZ,LAPIZ,1,palabra,1,0,PERRO,1,0.938827462536
+88,BICI,RIDI,0,pseudopalabra,0,NA,NA,NA,NA
+90,FLOR,CLAB,0,pseudopalabra,0,NA,NA,NA,NA
+85,GLOBO,GLOBO,1,palabra,1,0,JUGO,1,1.48601830257
+86,LAPIZ,TAFIR,0,pseudopalabra,0,NA,NA,NA,NA
+81,JUGO,JUGO,1,palabra,1,1,JUGO,0,0.743333964117

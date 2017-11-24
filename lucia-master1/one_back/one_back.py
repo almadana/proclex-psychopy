@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 
-#EXPERIMENTO ONE-BACK REPETTION (Réplica Maurer 2015)
-
-
-#"trial"=cond
+#-------------EXPERIMENTO ONE-BACK REPETTION (Réplica Maurer 2015)-------------------
+# Lucía Fernández y Álvaro Cabana
+# Grupo Lenguaje - CIBPsi - Facultad de Psicología, Universidad de la República, Montevideo Uruguay - Oct/Nov 2017
+#-------------------------------------------
 
 from __future__  import division
 from psychopy import visual, core, event, gui, data, sound
 import numpy as ny
 import os
-
+import random
 from ctypes import windll
+
 
 #Puerto paralelo para trigger
 trig= windll.inpout32
@@ -35,6 +36,7 @@ def getTrialList(itemList,nReps):
     #for nItem,item,cond_target,bloque,e,f,g,h,i,j in itemList:
     #creo lista permutada
     #trialList=list(  ny.random.permutation(itemList)   )
+    trialList=itemList[:]
     random.shuffle(trialList)
     # partir a la mitad itemList
     #cuanto es la mitad?
@@ -80,12 +82,15 @@ def presentarEstimulo(words,recuadro,mywin,tipoItem,trigCode):
     words.setFont(fuentes[tipoItem]) # elige fuente según el tipo de estímulo
     words.setHeight(tamanios[tipoItem])
     #levanta Trigger
-    trig.Out32(0x378,trigCode)
+    # atencion; duración del estímulo
     duracionEstimulo=1.0
-    recuadro.draw()
-    words.draw()
-    mywin.flip()
-    core.wait(duracionEstimulo,duracionEstimulo)
+    nFramesEstimulo = 85 # 1 segundo a 85 Hz
+    for nFrame in range(nFramesEstimulo):
+        trig.Out32(0x378,trigCode) # prendo trigger en el primer frame 
+        recuadro.draw()
+        words.draw()
+        mywin.flip()
+    #core.wait(duracionEstimulo,duracionEstimulo)
     #termina Trigger
     trig.Out32(0x378,0) # -  DESCOMENTAR EL USO DE TRIGGERS!
     
@@ -176,6 +181,18 @@ def presentarInstruccion(clave):
     mywin.flip()
     core.wait(5,0) # pausa obligatoria
     event.waitKeys()
+
+def onsetExpe():  # un poquito de pausa antes que comience el expe
+    mywin.flip()
+    core.wait(1)
+    recuadro.draw()
+    mywin.flip()
+    core.wait(3)
+
+
+
+
+
 # ----------------- PRESETS --------------
 
 #           Info del experimento
@@ -191,12 +208,19 @@ mywin.setMouseVisible(False)
 
 #trig.Out32(0x378,0)    
 
+
+##### FRAME RATE #######
+# EN MONITOR AOC CT720g - 1024x768@85Hz 
 fps=mywin.getActualFrameRate()
+#################  85 Hz ----- 11.764 msec/frame 
+
+
+
 print "-------------\nFrame Rate: "+str(fps)+"\n------------"
 if fps!=None:
     frameDur = 1.0/round(fps)
 else:
-    frameDur = 1.0/60.0 # couldn't get a reliable measure so guess
+    frameDur = 1.0/85.0 # couldn't get a reliable measure so guess
 
 # archivos de estímulos para cada condición
 archivos = {'practica':'practica_task1.csv','palabra':'palabras.csv','pseudopalabra':'pseudopalabras.csv','falsefont':'falsefont.csv'}
@@ -258,7 +282,7 @@ else:
 path=os.getcwd()
 if not os.path.exists('salida'):
     os.makedirs('salida')
-nombreArch=expInfo['experimentador']+'_one_back_prueba_'+expInfo['sujeto']+'_'+expInfo['fecha']
+nombreArch=expInfo['experimentador']+'_one_back_'+expInfo['sujeto']+'_'+expInfo['cond']+'_'+expInfo['fecha']
 archivoOut=path+'\\salida\\'+nombreArch+'.csv'
 salida = open(archivoOut,'w')
 
@@ -312,10 +336,14 @@ if expInfo['cond']=='practica':
 else:
     presentarInstruccion('inicio_1')
     presentarInstruccion('inicio_2')
+
+# AQUÍ COMIENZA LA ACCIÓN
+# LOOP DE BLOQUES
 #deberìan haber dos bloques, eso es lo que devuelve getTrialList()...
 for nBloque,bloque in enumerate(bloques):
     if nBloque >0:
         presentarInstruccion('pausa')
+    onsetExpe()
     loopEstimulo(mywin,bloque,trialClock,fixation,estimuloTexto,salida,ensayo)
 if not expInfo['cond']=='practica':
     presentarInstruccion('fin')

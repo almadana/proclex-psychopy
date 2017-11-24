@@ -1,0 +1,5 @@
+num_item,item, tipoEstimulo, cod_tipoEstimulo, tipo_pal, frec, frec_ac, num_caract, estr, acierto,TR
+56,PINO,MISO,2,pseudopalabra,0,NA,NA,NA,NA
+65,ROSA,ROSA,1,palabra,0,0,NA,NA,NA
+60,RATA,GADA,2,pseudopalabra,0,NA,NA,NA,NA
+3,BESO,REDO,2,pseudopalabra,0,NA,NA,NA,NA
